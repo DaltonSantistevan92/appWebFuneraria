@@ -1,0 +1,25 @@
+<!-- <p>home works!</p> -->
+
+
+<div #me class="m">
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <a class="logo d-flex align-items-center">
+          <img src="assets/img/vidanova-dorado.png" alt="">
+          <span class="d-none d-lg-block">Vidanova</span>
+        </a>
+        <i (click)="openCloseMenu()" class="bi bi-list toggle-sidebar-btn"></i>
+      </div>
+    
+      <app-nav [user]="user"  class="header-nav ms-auto"></app-nav>
+    </header>
+    
+    <app-sidebar [menu]="menu"></app-sidebar>
+  
+    <main id="main" class="main">
+        <router-outlet></router-outlet>
+    </main>
+ 
+    
+    <!-- <app-footer></app-footer> -->
+</div>

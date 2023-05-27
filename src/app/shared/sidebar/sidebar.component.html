@@ -1,0 +1,19 @@
+<!-- <p>sidebar works!</p> -->
+
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item" *ngFor="let m of menu">
+        <a class="nav-link collapsed" [attr.data-bs-target]="'#components-nav-'+m.id" data-bs-toggle="collapse">
+          <i [class]="m.icono"></i><span>{{ m.nombre | titlecase }}</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="{{'components-nav-'+m.id}}" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li *ngFor="let mh of m.menus_hijos">
+            <a [routerLink]="[m.url, mh.url]" routerLinkActive="active-link" >
+              <i class="bi bi-circle"></i><span>{{ mh.nombre | titlecase }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+</aside>>

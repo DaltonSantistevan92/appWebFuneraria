@@ -1,0 +1,19 @@
+.img-fluid { height : 300px; }
+ 
+.br { border-radius: 20px; }
+
+.bg-login { 
+    /* background: url("../../../assets/img/") no-repeat center center fixed; */ 
+    // background-color: rgb(1, 22, 85);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow: show;   
+}
+
+
+.btn-personalizado{
+    background-color: rgb(1, 22, 85);
+    color: #fff;
+}

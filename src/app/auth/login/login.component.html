@@ -1,0 +1,79 @@
+<!-- <p>login works!</p> -->
+
+
+
+
+
+<main class="bg-login">
+  <div class="container">
+    <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+      <div class="container card pb-5 br-4">
+
+        <div class="row justify-content-center">
+          <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <div class="d-flex justify-content-center py-4">
+              <img src="assets/img/vidanova.png" width="200" height="80" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+
+            <div class="card mb-2">
+              <div class="card-body">
+
+                <div class="pt-2 pb-1">
+                  <p class="card-title text-center small pb-0">Bienvenido</p>
+                </div>
+
+                <form class="row g-1" [formGroup]="formLogin">
+                  <div class="col-12">
+                    <label class="form-label">Correo</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text">
+                        <i class="bi bi-envelope-at"></i>
+                      </span>
+                      <input type="text" class="form-control" formControlName="email" appEmailValidation>
+                    </div>
+
+                    <ng-container *ngIf="formLogin.get('email')?.dirty || formLogin.get('email')?.touched">
+                      <small class="text-danger" *ngIf="formLogin.get('email')?.errors?.['required']"> El correo es requerido. </small>
+                      <small class="text-danger" *ngIf="formLogin.get('email')?.invalid"> El correo no es válido. </small>
+                    </ng-container>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label">Contraseña</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" (click)="hide = !hide">
+                        <i class="' {{hide ? 'bi bi-eye-slash' : 'bi bi-eye'}} '"></i>
+                      </span>
+                      <input [type]="hide ? 'password' : 'text'" class="form-control" formControlName="password">
+                    </div>
+
+                    <ng-container *ngIf="formLogin.get('password')?.dirty || formLogin.get('password')?.touched">
+                      <small class="text-danger" *ngIf="formLogin.get('password')?.errors?.['required']"> La contraseña es requerida. </small>
+                      <small class="text-danger" *ngIf="formLogin.controls['password']?.errors?.['minlength']"> La contraseña debe tener mínimo 6 caracteres. </small>
+                    </ng-container>
+                  </div>
+                </form>
+
+                <div class="col-12 mt-4">
+                  <button class="btn btn-personalizado w-100" [disabled]="formLogin.invalid" (click)="login()">Iniciar Sesion</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+            <div class="oblique position-absolute mt-1 w-60 d-md-block d-none">
+              <img src="assets/img/log.jpg" class="img-fluid" style="border-radius: 150px;" alt="">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
