@@ -7,19 +7,23 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { GestionAfiliacionComponent } from './gestion-afiliacion/gestion-afiliacion.component';
 import { MaterialModule } from '../material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { VerAfiliacionComponent } from './gestion-afiliacion/ver-afiliacion/ver-afiliacion.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
     DashboardComponent,
-    GestionAfiliacionComponent
+    GestionAfiliacionComponent,
+    VerAfiliacionComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class HomeModule { }

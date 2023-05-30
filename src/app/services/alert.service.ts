@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, delay, lastValueFrom, of } from 'rxjs';
 import Swal, { SweetAlertIcon, SweetAlertResult } from 'sweetalert2';
 
 @Injectable({
@@ -35,4 +35,23 @@ export class AlertService {
       });
     });
   }
+  
+  async alertStatus(title: string, text: string, icon: SweetAlertIcon): Promise<boolean> {
+    const delayTime = 1000;
+  
+    await lastValueFrom(of(null).pipe(delay(delayTime)));
+  
+    const result = await Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si'
+    });
+  
+    return result.isConfirmed;
+  }
+
 }

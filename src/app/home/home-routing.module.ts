@@ -18,7 +18,7 @@ const routes: Routes = [
         canActivate : [AuthGuard],
       },
       { 
-        path : 'gestion-afiliacion/consultar', 
+        path : 'gestión-afiliación/consultar', 
         component : GestionAfiliacionComponent,
         canActivate : [AuthGuard],
       },

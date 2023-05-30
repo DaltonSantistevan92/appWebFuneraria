@@ -1,103 +1,101 @@
-<div >
-  <h1 >Gestión de afiliación</h1>
-
-  <nav class="d-flex justify-content-end">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a ><i class="bi bi-house-door"></i></a></li>
-      <li class="breadcrumb-item"><a >Library</a></li>
-      <li class="breadcrumb-item active">Right Position</li>
-    </ol>
-  </nav>
-</div>
-
-
 <!-- <p>gestion-afiliacion works!</p> -->
+<app-breadcrumb [listaUrl]="listaUrl"></app-breadcrumb>
 
 <div class="row col-12">
   <div class="col-md-12 ">
-      <div class="row">
-        <div class="col-lg-7 mt-2 d-flex justify-content-start">
+    <div class="row">
+      <div class="col-lg-7 mt-2 d-flex justify-content-start">
+
+        <form [formGroup]="formTableAfiliado">
           <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Estado</mat-label>
-            <mat-select >
+            <mat-select formControlName="estado_id">
               <mat-option>-- Seleccione un Estado--</mat-option>
               <mat-option *ngFor="let e of estados" [value]="e.id">
                 {{e.detalle | titlecase}}
               </mat-option>
             </mat-select>
-      
+            <mat-error *ngIf="formTableAfiliado.get('estado_id')?.errors?.['required']">
+              El estado es obligatorio.
+            </mat-error>
           </mat-form-field>
+        </form>
       </div>
-          <div class="col-lg-5 d-flex justify-content-end">
-              <mat-form-field appearance="standard" class="d-flex justify-content-end">
-                  <mat-label>Buscar...</mat-label>
-                      <input matInput (keyup)="applyFilterAfiliado($event)" placeholder="Ej. Mia" #inputAfiliado>
-                  </mat-form-field>
-          </div>
+      <div class="col-lg-5 d-flex justify-content-end">
+        <mat-form-field appearance="standard" class="d-flex justify-content-end">
+          <mat-label>Buscar...</mat-label>
+          <input matInput (keyup)="applyFilterAfiliado($event)" placeholder="Ej. Mia" #inputAfiliado>
+        </mat-form-field>
       </div>
+    </div>
   </div>
-  
-    
-  <div class="mt-3">
-      <table mat-table [dataSource]="dataSourceAfiliado" multiTemplateDataRows matSort>
-         
-          <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef> N° </th>
-              <td mat-cell *matCellDef="let element; let i = dataIndex;"> {{ i+1 }} </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="cliente">
-              <th mat-header-cell *matHeaderCellDef> Nombre del Cliente </th>
-              <td mat-cell *matCellDef="let element"> {{element.nombre | titlecase}} </td>
-          </ng-container>
-  
-          
-          <ng-container matColumnDef="fecha">
-              <th mat-header-cell *matHeaderCellDef> Fecha </th>
-              <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="estado">
-              <th mat-header-cell *matHeaderCellDef> Estado </th>
-              <td mat-cell *matCellDef="let element" >
-                  <mat-chip-list aria-label="Fish selection">
-                      <mat-chip *ngIf="element.estado === 'A'" color="primary" selected>Activo</mat-chip> 
-                      <mat-chip  *ngIf="element.estado === 'I'" color="accent" selected>Inactivo</mat-chip>
-                  </mat-chip-list>
-              </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="accion">
-              <th mat-header-cell *matHeaderCellDef> Accion </th>
-  
-              <td mat-cell *matCellDef="let element">
-                  <mat-icon (click)="activarAfilicacion(element)" color="primary">edit</mat-icon>
-                  <mat-icon (click)="anularAfiliacion(element)">delete</mat-icon>
-              </td>
-          </ng-container>
-  
-          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandAfiliado"></tr>
-          <tr mat-row *matRowDef="let row; columns: columnsToDisplayWithExpandAfiliado;"></tr>
-  
-          <tr class="mat-row" *matNoDataRow>
-              <td class="mat-cell" colspan="4">No hay registros "{{inputAfiliado.value}}"</td>
-          </tr>
-      </table>
-      <!-- <mat-paginator 
+
+
+  <div class="mt-3" *ngIf="band">
+    <table mat-table [dataSource]="dataSourceAfiliado" multiTemplateDataRows matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> N° </th>
+        <td mat-cell *matCellDef="let element; let i = dataIndex;"> {{ i+1 }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cedula">
+        <th mat-header-cell *matHeaderCellDef> Cédula </th>
+        <td mat-cell *matCellDef="let element"> {{ element.cliente.persona.cedula }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef> Nombre del Cliente </th>
+        <td mat-cell *matCellDef="let element"> {{ getNombreCliente(element) | titlecase}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+        <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-chip-list aria-label="Fish selection">
+            <mat-chip [matMenuTriggerFor]="menu" #menuTrigger
+              [color]="element.estado_id === 4 ? 'primary' : (element.estado_id === 1 ? 'accent' : 'warn')" selected>
+              {{ element.estado.detalle | titlecase }}
+            </mat-chip>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item *ngFor="let e of estados" [value]="e.id" (click)="openAlert(e.id, element.id, element.estado_id)"
+                [disabled]="isEstadoBlocked(e.id, element.estado_id) || element.estado_id === 3">
+                {{ e.detalle | titlecase }}
+              </button>
+            </mat-menu>
+          </mat-chip-list>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef> Accion </th>
+
+        <td mat-cell *matCellDef="let element">
+          <mat-icon (click)="verAfilicacion(element)" color="primary">portrait</mat-icon>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandAfiliado"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplayWithExpandAfiliado;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No hay registros "{{inputAfiliado.value}}"</td>
+      </tr>
+    </table>
+    <!-- <mat-paginator 
       #MatPaginator [length]="columnsToDisplayWithExpandAfiliado.length"
       [pageSize]="10"
       hidePageSize
       showFirstLastButtons></mat-paginator> -->
 
-      <mat-paginator #MatPaginator [pageSizeOptions]="[5, 10, 25, 100]" length="dataSourceAfiliado"></mat-paginator>
+    <mat-paginator #MatPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
-     <!--  <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
-          <mat-progress-spinner color="primary" mode="indeterminate"> </mat-progress-spinner>
-      </mat-card> -->
-      
   </div>
 
 </div>
-
-
- 

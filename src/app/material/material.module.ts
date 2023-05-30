@@ -9,6 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+
 
 
 
@@ -22,7 +25,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatIconModule,
     MatChipsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule,
+    MatButtonModule
   ], 
   exports : [
     MatDialogModule,
@@ -32,7 +37,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatIconModule,
     MatChipsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule,
+    MatButtonModule
   ] 
 })
 export class MaterialModule { }

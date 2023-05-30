@@ -1,0 +1,13 @@
+<div >
+    <h1>{{ titulo | titlecase }}</h1>
+  
+    <nav class="d-flex justify-content-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/home"><i class="bi bi-house-door"></i></a></li>
+            <li class="breadcrumb-item" *ngFor="let nl of newListaUrl">
+                <a>{{ nl.path | titlecase }}</a>
+            </li>
+      </ol>
+    </nav>
+  </div>
