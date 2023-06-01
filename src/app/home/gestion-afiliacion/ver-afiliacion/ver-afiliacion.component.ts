@@ -53,6 +53,10 @@ export class VerAfiliacionComponent implements OnInit {
     });
   }
 
+  verimg(folder: string, image: string): string {
+    return this._gs.verImagen(folder, image);
+  }
+
   changeAfiliado(){
     if (this.data != null) {
       const {fecha, estado_id, estado, cliente : { persona }, estado_civil, contacto_emergencia, detalle_afiliado } = this.data;

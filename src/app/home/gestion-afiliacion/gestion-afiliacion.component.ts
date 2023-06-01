@@ -183,14 +183,7 @@ export class GestionAfiliacionComponent implements OnInit {
   }
 
   verAfilicacion(afiliado: Afiliado){
-    const dialogRef = this.dialog.open(VerAfiliacionComponent, { disableClose: true, data:afiliado, width: '700px', height: '900px'} );
-    
-    dialogRef.afterClosed().pipe(delay(2000)).subscribe( (result : any) => {
-      if (result != undefined) { 
-       
-      }
-    });
-    
+    const dialogRef = this.dialog.open(VerAfiliacionComponent, { disableClose: true, data:afiliado, width: '700px', height: '900px'} );  
   }
 
   openAlert(estadoSeleccionado : number, afiliado_id : number, estadoAnterior: number){

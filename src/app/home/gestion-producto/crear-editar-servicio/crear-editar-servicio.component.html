@@ -1,0 +1,91 @@
+<div class="container">
+    <h2 mat-dialog-title>{{ listadoSeleccionado ? "Actualizar la Información Del Servicio" : "Ingresar Nueva Información Del Servicio" }}</h2>
+
+    <form class="example-form row mt-3" [formGroup]="formServicio">
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="display: flex; justify-content: center; padding: 5px" class="mt-2">
+                    <ngx-dropzone ngx-dropzone [accept]="'image/*'" [multiple]="false" (change)="onSelect($event)">
+                      <ngx-dropzone-label class="custom-dropzone">
+                        &nbsp; Ingrese una Imagen &nbsp;
+                      </ngx-dropzone-label>
+                      <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                        [file]="f" [removable]="true" (removed)="onRemove(f)">
+                      </ngx-dropzone-image-preview>
+                    </ngx-dropzone>
+                  </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="col-md-12 mt-2">
+                    <mat-form-field  class="example-full-width" appearance="outline">
+                        <mat-label>Nombre del Servicio</mat-label>
+                        <input matInput formControlName="nombre" type="text" appSoloLetras>
+                        <mat-error *ngIf="formServicio.get('nombre')?.errors?.['required']">
+                            El nombre del servicio es obligatorio.
+                        </mat-error>
+                        <mat-error *ngIf="formServicio.get('nombre')?.errors?.['minlength']">
+                            El nombre del servicio debe ser mas de 3 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-12 mt-2">
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Categoria</mat-label>
+                        <mat-select formControlName="categoria_id">
+                            <mat-option>-- Seleccione una Categoria --</mat-option>
+                            <mat-option *ngFor="let lc of listaCategoria" [value]="lc.id">
+                                {{lc.nombre_categoria | titlecase}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formServicio.get('categoria_id')?.errors?.['required']">
+                            La Categoria es obligatorio
+                        </mat-error>
+                    </mat-form-field> 
+                </div>
+
+                <div class="col-md-12 mt-2">
+                    <mat-form-field  class="example-full-width" appearance="outline">
+                        <mat-label>Precio</mat-label>
+                        <input matInput formControlName="precio" type="text" appDecimalNumber>
+                        <mat-error *ngIf="formServicio.get('precio')?.errors?.['required']">
+                            El precio del servicio es obligatorio.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="col-md-12 mt-2">
+                    <mat-form-field  class="example-full-width" appearance="outline">
+                        <mat-label>Descripcion</mat-label>
+                        <textarea matInput formControlName="descripcion" rows="12" cols="12" type="text"></textarea>
+                        <mat-error *ngIf="formServicio.get('descripcion')?.errors?.['required']">
+                            La descripcion del servicio es obligatorio.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <mat-dialog-actions align="center">
+            <button mat-button mat-dialog-close (click)="close()">Cancelar</button>
+            <button mat-stroked-button
+                    color="primary"  
+                    (click)="saveUpdateServicio()"
+                    [disabled]="formServicio.invalid"
+                    [mat-dialog-close]="true" 
+                    cdkFocusInitial>
+                    {{ listadoSeleccionado ? "Actualizar" : "Guardar" }}
+            </button>
+            </mat-dialog-actions>
+        </div>
+
+
+    </form>
+</div>
+

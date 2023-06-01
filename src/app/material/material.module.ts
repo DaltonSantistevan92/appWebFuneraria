@@ -11,6 +11,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 
 
 
@@ -27,7 +29,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatChipsModule,
     MatSelectModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule,
+    MatListModule
   ], 
   exports : [
     MatDialogModule,
@@ -39,7 +43,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatChipsModule,
     MatSelectModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule,
+    MatListModule
   ] 
 })
 export class MaterialModule { }

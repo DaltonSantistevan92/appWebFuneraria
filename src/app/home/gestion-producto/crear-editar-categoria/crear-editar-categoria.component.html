@@ -1,0 +1,53 @@
+<div class="container">
+    <h2 mat-dialog-title>{{ listadoSeleccionado ? "Actualizar la Información De La Categoria" : "Ingresar Nueva Información De La Categoria" }}</h2>
+
+    <form class="example-form row mt-3" [formGroup]="formCategoria">
+        <div class="row">
+            <div class="col-sm-6">
+                <div style="display: flex; justify-content: center; padding: 5px" class="mt-2">
+                    <ngx-dropzone ngx-dropzone [accept]="'image/*'" [multiple]="false" (change)="onSelect($event)">
+                      <ngx-dropzone-label class="custom-dropzone">
+                        &nbsp; Ingrese una Imagen &nbsp;
+                      </ngx-dropzone-label>
+                      <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                        [file]="f" [removable]="true" (removed)="onRemove(f)">
+                      </ngx-dropzone-image-preview>
+                    </ngx-dropzone>
+                  </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="col-md-12 mt-2">
+                    <mat-form-field  class="example-full-width" appearance="outline">
+                        <mat-label>Nombre de la Categoria</mat-label>
+                        <input matInput formControlName="nombre_categoria" type="text" appSoloLetras>
+                        <mat-error *ngIf="formCategoria.get('nombre_categoria')?.errors?.['required']">
+                            El nombre de la categoria es obligatorio.
+                        </mat-error>
+                        <mat-error *ngIf="formCategoria.get('nombre_categoria')?.errors?.['minlength']">
+                            El nombre de la categoria debe ser mas de 3 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 mt-2">
+
+                    <div class="row">
+                        <mat-dialog-actions align="center">
+                        <button mat-button mat-dialog-close (click)="close()">Cancelar</button>
+                        <button mat-stroked-button
+                                color="primary"  
+                                (click)="saveUpdateCategoria()"
+                                [disabled]="formCategoria.invalid"
+                                [mat-dialog-close]="true" 
+                                cdkFocusInitial>
+                                {{ listadoSeleccionado ? "Actualizar" : "Guardar" }}
+                        </button>
+                        </mat-dialog-actions>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -9,21 +9,32 @@ import { GestionAfiliacionComponent } from './gestion-afiliacion/gestion-afiliac
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VerAfiliacionComponent } from './gestion-afiliacion/ver-afiliacion/ver-afiliacion.component';
-
+import { GestionProductoComponent } from './gestion-producto/gestion-producto.component';
+import { CrearEditarCategoriaComponent } from './gestion-producto/crear-editar-categoria/crear-editar-categoria.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { SoloLetrasDirective } from '../directives/solo-letras.directive';
+import { CrearEditarServicioComponent } from './gestion-producto/crear-editar-servicio/crear-editar-servicio.component';
+import { DecimalNumberDirective } from '../directives/decimal-number.directive';
 
 @NgModule({
   declarations: [
     HomeComponent,
     DashboardComponent,
     GestionAfiliacionComponent,
-    VerAfiliacionComponent
+    VerAfiliacionComponent,
+    GestionProductoComponent,
+    CrearEditarCategoriaComponent,
+    CrearEditarServicioComponent,
+    SoloLetrasDirective,
+    DecimalNumberDirective
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     SharedModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDropzoneModule
   ]
 })
 export class HomeModule { }
