@@ -30,7 +30,6 @@ export interface Servicio {
   categoria: Categorias;
 }
 
-
 export interface ServicioDescripcionModificado {
   id: number;
   categoria_id: number;

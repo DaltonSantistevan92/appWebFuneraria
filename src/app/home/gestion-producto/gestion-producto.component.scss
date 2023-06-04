@@ -82,3 +82,11 @@ tr.example-element-row:not(.example-expanded-row):active {
 .fs {
     font-size: 10px;
 }
+
+//
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+  
+  

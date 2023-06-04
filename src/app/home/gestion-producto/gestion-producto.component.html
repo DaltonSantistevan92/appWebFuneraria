@@ -64,8 +64,10 @@
       </div>
     </div>
 
-    <mat-action-row>
-      <button mat-button color="primary" (click)="nextStep()">Registrar Servicio</button>
+    <mat-action-row class="button-container">
+      <button mat-button color="warn" (click)="setStep(2)"> <mat-icon>style</mat-icon> Registrar Producto</button>
+      <button mat-button color="primary" (click)="nextStep()"> <mat-icon>move_to_inbox</mat-icon> Registrar
+        Servicio</button>
     </mat-action-row>
   </mat-expansion-panel>
 
@@ -118,7 +120,7 @@
             <td mat-cell *matCellDef="let element"> {{ element.precio | currency : 'USD' }} </td>
           </ng-container>
 
-          <ng-container matColumnDef="categoria">
+          <ng-container matColumnDef="nombre_categoria">
             <th mat-header-cell *matHeaderCellDef> Nombre de la Categoria </th>
             <td mat-cell *matCellDef="let element"> {{ element.categoria.nombre_categoria }} </td>
           </ng-container>
@@ -207,20 +209,115 @@
       </div>
     </div>
 
-    <mat-action-row>
-      <button mat-button color="primary" (click)="nextStep()">Registrar Productos</button>
+    <mat-action-row class="button-container">
+      <button mat-button color="warn" (click)="prevStep()"> <mat-icon>unarchive</mat-icon> Registrar Categoria</button>
+      <button mat-button color="primary" (click)="nextStep()"> <mat-icon>style</mat-icon> Registrar Productos</button>
     </mat-action-row>
   </mat-expansion-panel>
 
   <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
-        Productos
-      </mat-panel-title>
-
+      <mat-panel-title> Productos </mat-panel-title>
       <mat-icon>style</mat-icon>
-
     </mat-expansion-panel-header>
+
+    <div class="row col-12">
+      <div class="col-md-12 ">
+        <div class="row">
+          <div class="col-lg-7 mt-2 ">
+            <button mat-stroked-button color="primary" (click)="crearNuevoProducto()">Crear Nuevo Producto</button>
+          </div>
+
+          <div class="col-lg-5 d-flex justify-content-end">
+            <mat-form-field appearance="standard" class="d-flex justify-content-end">
+              <mat-label>Buscar...</mat-label>
+              <input matInput (keyup)="applyFilterProducto($event)" placeholder="Ej. Mia" #inputProducto>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <table mat-table [dataSource]="dataSourceProducto" multiTemplateDataRows matSort>
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> N° </th>
+            <td mat-cell *matCellDef="let element; let i = dataIndex;"> {{ i+1 }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="imagen">
+            <th mat-header-cell *matHeaderCellDef> Imagen </th>
+            <td mat-cell *matCellDef="let element">
+              <img [src]="verimg('productos', element.imagen)" style="border-radius: 10px;" width="75px" height="75px">
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="codigo">
+            <th mat-header-cell *matHeaderCellDef> Código </th>
+            <td mat-cell *matCellDef="let element"> {{ element.codigo }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{ element.nombre | titlecase }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="categoria">
+            <th mat-header-cell *matHeaderCellDef> Categoria </th>
+            <td mat-cell *matCellDef="let element"> {{ element.categoria.nombre_categoria | titlecase }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="stock">
+            <th mat-header-cell *matHeaderCellDef> Stock </th>
+            <td mat-cell *matCellDef="let element"> 
+              <button mat-mini-fab [ngStyle]="getStockColor(element.stock)"> {{ element.stock }} </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="precio_compra">
+            <th mat-header-cell *matHeaderCellDef> Precio Compra </th>
+            <td mat-cell *matCellDef="let element"> {{ element.precio_compra | currency: 'USD' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="precio_venta">
+            <th mat-header-cell *matHeaderCellDef> Precio Venta </th>
+            <td mat-cell *matCellDef="let element"> {{ element.precio_venta | currency: 'USD' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="margen_ganancia">
+            <th mat-header-cell *matHeaderCellDef> Margen de Ganancia </th>
+            <td mat-cell *matCellDef="let element"> {{ element.margen_ganancia | currency: 'USD' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="accion">
+            <th mat-header-cell *matHeaderCellDef> Accion </th>
+
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" (click)="editarProducto(element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="eliminarProducto(element)" [disabled]="element.stock > 0">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandProducto"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplayWithExpandProducto;"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No hay registros "{{inputProducto.value}}"</td>
+          </tr>
+        </table>
+        <mat-paginator #MatPaginatorProducto [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+    </div>
+
+    <mat-action-row class="button-container">
+      <button mat-button color="warn" (click)="setStep(0)"> <mat-icon>unarchive</mat-icon> Registrar Categoria</button>
+      <button mat-button color="primary" (click)="prevStep()"> <mat-icon>move_to_inbox</mat-icon> Registrar
+        Servicio</button>
+    </mat-action-row>
   </mat-expansion-panel>
 
 </mat-accordion>

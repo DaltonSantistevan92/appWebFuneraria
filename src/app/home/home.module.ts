@@ -15,6 +15,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SoloLetrasDirective } from '../directives/solo-letras.directive';
 import { CrearEditarServicioComponent } from './gestion-producto/crear-editar-servicio/crear-editar-servicio.component';
 import { DecimalNumberDirective } from '../directives/decimal-number.directive';
+import { CrearEditarProductoComponent } from './gestion-producto/crear-editar-producto/crear-editar-producto.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DecimalNumberDirective } from '../directives/decimal-number.directive';
     CrearEditarCategoriaComponent,
     CrearEditarServicioComponent,
     SoloLetrasDirective,
-    DecimalNumberDirective
+    DecimalNumberDirective,
+    CrearEditarProductoComponent
   ],
   imports: [
     CommonModule,
