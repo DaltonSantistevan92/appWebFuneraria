@@ -1,0 +1,119 @@
+<div class="container">
+    <h2 mat-dialog-title>{{ listadoSeleccionado ? "Actualizar la Información Del Proveedor" : "Ingresar Nueva Información Del Proveedor" }}</h2>
+
+    <form class="example-form row mt-3" [formGroup]="formProveedor">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-md-6 mt-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Ruc</mat-label>
+                        <input matInput formControlName="ruc" type="text" appRuc>
+                        <mat-error *ngIf="formProveedor.get('ruc')?.errors?.['required']">
+                            El ruc del proveedor es obligatorio.
+                        </mat-error>
+
+                        <mat-error *ngIf="formProveedor.get('ruc')?.errors?.['rucInvalidLength']">
+                            El RUC debe tener 13 dígitos.
+                        </mat-error>
+                        <mat-error *ngIf="formProveedor.get('ruc')?.errors?.['rucInvalidFormat']">
+                            El formato del RUC es inválido.
+                        </mat-error>
+                        <mat-error *ngIf="formProveedor.get('ruc')?.errors?.['rucInvalidVerification']">
+                            El dígito verificador del RUC es incorrecto.
+                        </mat-error>
+                        <mat-error *ngIf="formProveedor.get('ruc')?.errors?.['rucInvalidCedula']">
+                            La cédula de identidad en el RUC es inválida.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6 mt-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Razon Social</mat-label>
+                        <input matInput formControlName="razon_social" type="text" appSoloLetras>
+                        <mat-error *ngIf="formProveedor.get('razon_social')?.errors?.['required']">
+                            La razon social del proveedor es obligatorio.
+                        </mat-error>
+                        <mat-error *ngIf="formProveedor.get('razon_social')?.errors?.['minlength']">
+                            La razon social del proveedor debe ser mas de 3 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-md-6 mt-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Correo</mat-label>
+                        <input matInput formControlName="correo" type="text" appEmailValidation>
+                        <mat-error *ngIf="formProveedor.get('correo')?.errors?.['required']">
+                            El correo del proveedor es obligatorio.
+                        </mat-error>
+                        <mat-error
+                            *ngIf="formProveedor.get('correo')?.invalid  && !formProveedor.get('correo')?.errors?.['required']">
+                            El correo no es válido.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>N° Celular</mat-label>
+                        <input matInput formControlName="celular" type="text" maxlength="10" appNumerosCelularEcuador>
+                        <mat-error *ngIf="formProveedor.get('celular')?.errors?.['required']">
+                            El celular del proveedor es obligatorio.
+                        </mat-error>
+                        <mat-error *ngIf="formProveedor.controls['celular']?.errors?.['minlength']">
+                            El número celular debe tener mínimo 10 caracteres.
+                        </mat-error>
+                        <mat-error
+                            *ngIf="formProveedor.get('celular')?.errors?.['ecuadorianPhone'] && !formProveedor.controls['celular']?.errors?.['minlength']">
+                            El número de celular es inválido.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 mt-2">
+            <div class="row">
+                <div class="col-md-6 mt-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Direccion</mat-label>
+                        <textarea matInput formControlName="direccion" rows="2" cols="12" type="text"
+                            appAlfaNumerico></textarea>
+                        <mat-error *ngIf="formProveedor.get('direccion')?.errors?.['required']">
+                            La direccion del proveedor es obligatorio.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>N° Teléfono</mat-label>
+                        <input appTelefono matInput formControlName="telefono" type="text" maxlength="10">
+                        <mat-error *ngIf="formProveedor.get('telefono')?.errors?.['required']">
+                            El teléfono del proveedor es obligatorio.
+                        </mat-error>
+                        <mat-error *ngIf="formProveedor.get('telefono')?.errors?.['telefonoInvalido']">
+                            El número de teléfono es inválido. (10 dígitos y comienza con 0).
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 mt-2">
+            <div class="row">
+                <mat-dialog-actions align="center">
+                    <button mat-button mat-dialog-close (click)="close()">Cancelar</button>
+                    <button mat-stroked-button color="primary" (click)="saveUpdateProveedor()"
+                        [disabled]="formProveedor.invalid" [mat-dialog-close]="true" cdkFocusInitial>
+                        {{ listadoSeleccionado ? "Actualizar" : "Guardar" }}
+                    </button>
+                </mat-dialog-actions>
+            </div>
+
+        </div>
+
+    </form>
+</div>

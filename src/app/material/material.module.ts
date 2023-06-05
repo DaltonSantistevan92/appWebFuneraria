@@ -13,6 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 
@@ -31,7 +32,8 @@ import { MatListModule } from '@angular/material/list';
     MatMenuModule,
     MatButtonModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ], 
   exports : [
     MatDialogModule,
@@ -45,7 +47,8 @@ import { MatListModule } from '@angular/material/list';
     MatMenuModule,
     MatButtonModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ] 
 })
 export class MaterialModule { }

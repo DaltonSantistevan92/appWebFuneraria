@@ -11,6 +11,9 @@ import { EmailValidationDirective } from '../directives/email-validation.directi
     LoginComponent,
     EmailValidationDirective
   ],
+  exports : [
+    EmailValidationDirective
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,

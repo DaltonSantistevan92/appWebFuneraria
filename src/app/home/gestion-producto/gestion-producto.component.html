@@ -40,7 +40,7 @@
 
           <ng-container matColumnDef="nombre_categoria">
             <th mat-header-cell *matHeaderCellDef> Nombre de la Categoria </th>
-            <td mat-cell *matCellDef="let element"> {{ element.nombre_categoria }}</td>
+            <td mat-cell *matCellDef="let element"> {{ element.nombre_categoria | titlecase }}</td>
           </ng-container>
 
           <ng-container matColumnDef="accion">

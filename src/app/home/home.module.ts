@@ -16,6 +16,13 @@ import { SoloLetrasDirective } from '../directives/solo-letras.directive';
 import { CrearEditarServicioComponent } from './gestion-producto/crear-editar-servicio/crear-editar-servicio.component';
 import { DecimalNumberDirective } from '../directives/decimal-number.directive';
 import { CrearEditarProductoComponent } from './gestion-producto/crear-editar-producto/crear-editar-producto.component';
+import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
+import { CrearEditarProveedorComponent } from './catalogo-proveedor/crear-editar-proveedor/crear-editar-proveedor.component';
+import { RucDirective } from '../directives/ruc.directive';
+import { AuthModule } from '../auth/auth.module';
+import { NumerosCelularEcuadorDirective } from '../directives/numeros-celular-ecuador.directive';
+import { AlfaNumericoDirective } from '../directives/alfa-numerico.directive';
+import { TelefonoDirective } from '../directives/telefono.directive';
 
 @NgModule({
   declarations: [
@@ -26,9 +33,15 @@ import { CrearEditarProductoComponent } from './gestion-producto/crear-editar-pr
     GestionProductoComponent,
     CrearEditarCategoriaComponent,
     CrearEditarServicioComponent,
+    CrearEditarProductoComponent,
+    CatalogoProveedorComponent,
+    CrearEditarProveedorComponent,
     SoloLetrasDirective,
     DecimalNumberDirective,
-    CrearEditarProductoComponent
+    RucDirective,
+    NumerosCelularEcuadorDirective,
+    AlfaNumericoDirective,
+    TelefonoDirective
   ],
   imports: [
     CommonModule,
@@ -36,7 +49,8 @@ import { CrearEditarProductoComponent } from './gestion-producto/crear-editar-pr
     SharedModule,
     MaterialModule,
     ReactiveFormsModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    AuthModule
   ]
 })
 export class HomeModule { }
