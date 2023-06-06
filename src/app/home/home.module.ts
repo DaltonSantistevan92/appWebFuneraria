@@ -23,6 +23,7 @@ import { AuthModule } from '../auth/auth.module';
 import { NumerosCelularEcuadorDirective } from '../directives/numeros-celular-ecuador.directive';
 import { AlfaNumericoDirective } from '../directives/alfa-numerico.directive';
 import { TelefonoDirective } from '../directives/telefono.directive';
+import { PrecioTocadoDirective } from '../directives/precio-tocado.directive';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { TelefonoDirective } from '../directives/telefono.directive';
     RucDirective,
     NumerosCelularEcuadorDirective,
     AlfaNumericoDirective,
-    TelefonoDirective
+    TelefonoDirective,
+    PrecioTocadoDirective
   ],
   imports: [
     CommonModule,

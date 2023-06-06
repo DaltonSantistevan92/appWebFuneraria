@@ -61,3 +61,27 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
     opacity: 0.5;
 }
+//
+.example-full-width { width: 100%; min-width: 200px; max-width: 300px; } 
+
+
+//
+
+h6 {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+h5 {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: gold;
+}
+
+h4 {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
