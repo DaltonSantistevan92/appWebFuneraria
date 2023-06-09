@@ -64,17 +64,6 @@ export class CatalogoProveedorComponent implements OnInit {
 
     // Suscribirse al evento valueChanges del control categoria_id
     this.formCatalogo.get('categoria_id')?.valueChanges.subscribe((categoria_id: number) => {
-      //validacion normal
-      /* if (categoria_id) {
-        this._cp.getProductoPorCategoria(categoria_id).subscribe( resp => {
-          console.log(resp);
-          this.listaProductoPorCatalogo = resp.data;
-        });
-      } else {
-        this.listaProductoPorCatalogo = []; // Vaciar el arreglo si no se selecciona una categoría válida
-      } */
-
-      //refactorizado a validacion ternaria
       categoria_id 
       ? this._cp.getProductoPorCategoria(categoria_id).subscribe(resp => { this.listaProductoPorCatalogo = resp.data as ProductoResponse[] }) 
       : this.listaProductoPorCatalogo = [];

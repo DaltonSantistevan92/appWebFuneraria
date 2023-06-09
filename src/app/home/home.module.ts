@@ -24,6 +24,7 @@ import { NumerosCelularEcuadorDirective } from '../directives/numeros-celular-ec
 import { AlfaNumericoDirective } from '../directives/alfa-numerico.directive';
 import { TelefonoDirective } from '../directives/telefono.directive';
 import { PrecioTocadoDirective } from '../directives/precio-tocado.directive';
+import { GestionCompraComponent } from './gestion-compra/gestion-compra.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { PrecioTocadoDirective } from '../directives/precio-tocado.directive';
     NumerosCelularEcuadorDirective,
     AlfaNumericoDirective,
     TelefonoDirective,
-    PrecioTocadoDirective
+    PrecioTocadoDirective,
+    GestionCompraComponent
   ],
   imports: [
     CommonModule,

@@ -6,6 +6,7 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 import { GestionAfiliacionComponent } from './gestion-afiliacion/gestion-afiliacion.component';
 import { GestionProductoComponent } from './gestion-producto/gestion-producto.component';
 import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
+import { GestionCompraComponent } from './gestion-compra/gestion-compra.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
@@ -32,6 +33,11 @@ const routes: Routes = [
       { 
         path : 'catálogo-proveedor/nuevo-catálogo', 
         component : CatalogoProveedorComponent,
+        canActivate : [AuthGuard],
+      },
+      { 
+        path : 'gestión-compra/consultar-compras', 
+        component : GestionCompraComponent,
         canActivate : [AuthGuard],
       },
     ]
