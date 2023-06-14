@@ -25,6 +25,7 @@ import { AlfaNumericoDirective } from '../directives/alfa-numerico.directive';
 import { TelefonoDirective } from '../directives/telefono.directive';
 import { PrecioTocadoDirective } from '../directives/precio-tocado.directive';
 import { GestionCompraComponent } from './gestion-compra/gestion-compra.component';
+import { SoloNumerosDirective } from '../directives/solo-numeros.directive';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { GestionCompraComponent } from './gestion-compra/gestion-compra.componen
     CrearEditarProductoComponent,
     CatalogoProveedorComponent,
     CrearEditarProveedorComponent,
+    GestionCompraComponent,
     SoloLetrasDirective,
     DecimalNumberDirective,
     RucDirective,
@@ -45,7 +47,7 @@ import { GestionCompraComponent } from './gestion-compra/gestion-compra.componen
     AlfaNumericoDirective,
     TelefonoDirective,
     PrecioTocadoDirective,
-    GestionCompraComponent
+    SoloNumerosDirective,
   ],
   imports: [
     CommonModule,
@@ -55,6 +57,6 @@ import { GestionCompraComponent } from './gestion-compra/gestion-compra.componen
     ReactiveFormsModule,
     NgxDropzoneModule,
     AuthModule
-  ]
+  ],
 })
 export class HomeModule { }

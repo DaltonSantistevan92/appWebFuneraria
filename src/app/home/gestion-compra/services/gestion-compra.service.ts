@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment.prod';
 import { IntProv } from '../../catalogo-proveedor/interface/proveedor.interface';
 import { IntProductoProveedor } from '../interfaces/producto-por-proveedor.interface';
 import { DetalleCompraObject } from '../interfaces/detalle-compra-table.interface';
+import { IntDataRequestCompra } from '../interfaces/compra.interface';
+import { IntTableCompraEstadoResponse } from '../interfaces/compras-por-estados.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +59,10 @@ export class GestionCompraService {
     return this.currentDataCartDetalleCompra$;
   }
 
+  vaciarCartDetalleCompra(): void {
+    this.cartDetalleCompra.next([]);
+  }
+
   aumentarCantidad(producto: DetalleCompraObject): void {
     const productoEnDetalle = this.getListCartDetalleCompra.find(item => item.producto_id === producto.producto_id);
     if (productoEnDetalle) {
@@ -88,5 +94,23 @@ export class GestionCompraService {
     this.cartDetalleCompra.next(this.getListCartDetalleCompra);
     this.actualizarTotales(this.getListCartDetalleCompra);
   }
+
+  //compra
+  saveCompra(data : IntDataRequestCompra): Observable<{ status : boolean; message : string }>{
+    const url = `${this.api}/saveCompra`;
+    return this.http.post<{ status : boolean; message : string }>(url,data);
+  }
+
+  //table de consulta de compra filtrado por estado_id
+  getComprasxEstados(estado_id: number): Observable<IntTableCompraEstadoResponse>{
+    const url = `${this.api}/tableCompras/${estado_id}`;
+    return this.http.get<IntTableCompraEstadoResponse>(url);
+  }
+
+  getSetEstadoCompra(compra_id : number, estado_id : number) :   Observable<any>{
+    const url = `${this.api}/setEstadoCompra/${compra_id}/${estado_id}`;
+    return this.http.get<any>(url);
+  }
+  
   
 }

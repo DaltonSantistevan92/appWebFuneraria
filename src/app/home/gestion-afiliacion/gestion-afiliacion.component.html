@@ -21,12 +21,15 @@
           </mat-form-field>
         </form>
       </div>
-      <div class="col-lg-5 d-flex justify-content-end">
-        <mat-form-field appearance="standard" class="d-flex justify-content-end">
-          <mat-label>Buscar...</mat-label>
-          <input matInput (keyup)="applyFilterAfiliado($event)" placeholder="Ej. Mia" #inputAfiliado>
-        </mat-form-field>
-      </div>
+      <ng-container *ngIf="band">
+        <div class="col-lg-5 d-flex justify-content-end">
+          <mat-form-field appearance="standard" class="d-flex justify-content-end">
+            <mat-label>Buscar...</mat-label>
+            <input matInput (keyup)="applyFilterAfiliado($event)" placeholder="Ej. Mia" #inputAfiliado>
+          </mat-form-field>
+        </div>
+      </ng-container>
+      
     </div>
   </div>
 
@@ -85,7 +88,7 @@
       <tr mat-row *matRowDef="let row; columns: columnsToDisplayWithExpandAfiliado;"></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No hay registros "{{inputAfiliado.value}}"</td>
+        <td class="mat-cell" colspan="4">No hay registros "{{inputAfiliado.nativeElement.value}}"</td>
       </tr>
     </table>
   
