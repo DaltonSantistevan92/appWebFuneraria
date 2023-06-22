@@ -7,6 +7,7 @@ import { GestionAfiliacionComponent } from './gestion-afiliacion/gestion-afiliac
 import { GestionProductoComponent } from './gestion-producto/gestion-producto.component';
 import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
 import { GestionCompraComponent } from './gestion-compra/gestion-compra.component';
+import { GestionPedidosComponent } from './gestion-pedidos/gestion-pedidos.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
@@ -38,6 +39,11 @@ const routes: Routes = [
       { 
         path : 'gestión-compra/consultar-compras', 
         component : GestionCompraComponent,
+        canActivate : [AuthGuard],
+      },
+      { 
+        path : 'gestión-pedidos/consultar-pedidos', 
+        component : GestionPedidosComponent,
         canActivate : [AuthGuard],
       },
     ]

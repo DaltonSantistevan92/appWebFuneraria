@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -26,6 +26,8 @@ import { TelefonoDirective } from '../directives/telefono.directive';
 import { PrecioTocadoDirective } from '../directives/precio-tocado.directive';
 import { GestionCompraComponent } from './gestion-compra/gestion-compra.component';
 import { SoloNumerosDirective } from '../directives/solo-numeros.directive';
+import { GestionPedidosComponent } from './gestion-pedidos/gestion-pedidos.component';
+
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { SoloNumerosDirective } from '../directives/solo-numeros.directive';
     TelefonoDirective,
     PrecioTocadoDirective,
     SoloNumerosDirective,
+    GestionPedidosComponent,
   ],
   imports: [
     CommonModule,
@@ -58,5 +61,6 @@ import { SoloNumerosDirective } from '../directives/solo-numeros.directive';
     NgxDropzoneModule,
     AuthModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeModule { }
