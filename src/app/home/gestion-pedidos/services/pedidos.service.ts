@@ -18,8 +18,8 @@ export class PedidosService {
     return this.http.get<IntTableVenta>(url);
   }
 
-  getSetEstadoVenta(venta_id : number, estado_id : number): Observable<any>{
-    const url = `${this.api}/setEstadoVenta/${venta_id}/${estado_id}`;
+  getSetEstadoVenta(venta_id : number, estado_id : number, user_id: number): Observable<any>{
+    const url = `${this.api}/setEstadoVenta/${venta_id}/${estado_id}/${user_id}`;
     return this.http.get<any>(url);
   }
 

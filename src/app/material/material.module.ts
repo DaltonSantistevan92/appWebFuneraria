@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -33,7 +34,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule,
     MatExpansionModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    DragDropModule
   ], 
   exports : [
     MatDialogModule,
@@ -48,7 +50,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule,
     MatExpansionModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    DragDropModule
   ] 
 })
 export class MaterialModule { }

@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-gestion-pedidos',
@@ -47,11 +48,14 @@ export class GestionPedidosComponent implements OnInit {
     private _afiSer: AfilicacionService,
     private _ps : PedidosService,
     private _alerSer: AlertService,
+    private _aus : AuthService,
+
   ) { }
 
   ngOnInit(): void {
     this.listaUrl = this.activedRoute.snapshot.url;
     this.initFormConsultaPedido();
+    this.setUser();
     this.getEstados();
 
     this.formConsultaPedido.get('estado_id')?.valueChanges.subscribe((estado_id:number) => { 
@@ -62,7 +66,15 @@ export class GestionPedidosComponent implements OnInit {
   initFormConsultaPedido(){
     this.formConsultaPedido = this.fb.group({
       estado_id: ['', [Validators.required]],
+      user_id : ['']
     });
+  }
+
+  setUser(){
+    if (this._aus.tokenDecodificado) {
+      const user_id =  this._aus.tokenDecodificado.user.id;
+      this.formConsultaPedido.patchValue({user_id}); 
+    }
   }
 
   getEstados() {
@@ -114,23 +126,25 @@ export class GestionPedidosComponent implements OnInit {
   openAlert(estadoSeleccionado : number, compra_id : number, estadoAnterior: number){
     const nombre = this.getNombreEstado(estadoSeleccionado);
 
-    console.log('nombre del estado', nombre);
+    let user_id = parseInt(this.formConsultaPedido.value.user_id);
+
+    //console.log('nombre del estado', nombre);
     
     if (nombre === 'anulado') {
        const name = nombre.replace('anulado','anular')
-       this.servicioEstado(name, estadoSeleccionado, compra_id, estadoAnterior);
+       this.servicioEstado(name, estadoSeleccionado, compra_id, estadoAnterior, user_id);
     }else if(nombre === 'en proceso'){
       const name = nombre.replace('en proceso','procesar')
-      this.servicioEstado(name, estadoSeleccionado, compra_id, estadoAnterior);
+      this.servicioEstado(name, estadoSeleccionado, compra_id, estadoAnterior,user_id);
     }else {
       console.log('no pasa nd');
     }
   }
 
-  servicioEstado(nombre: string, estadoSeleccionado: number, venta_id: number, estadoAnterior : number){
+  servicioEstado(nombre: string, estadoSeleccionado: number, venta_id: number, estadoAnterior : number, user_id:number){
     this._alerSer.alertStatus(`Está seguro de ${nombre} el pedido?`,'¡No podrás revertir esto!','warning').then((isConfirmed) => {
       if (isConfirmed) {
-        this._ps.getSetEstadoVenta(venta_id,estadoSeleccionado).subscribe({
+        this._ps.getSetEstadoVenta(venta_id,estadoSeleccionado,user_id).subscribe({
           next: (resp) => {
             if (resp.status) {
               this.band = true;

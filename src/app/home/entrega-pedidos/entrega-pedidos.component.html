@@ -1,0 +1,134 @@
+<app-breadcrumb [listaUrl]="listaUrl"></app-breadcrumb>
+
+<div class="row col-12">
+    <div class="col-md-12 ">
+        <div class="row">
+            <div class="col-lg-7 mt-2 ">
+            </div>
+
+            <div class="col-lg-5 d-flex justify-content-end">
+                <mat-form-field appearance="standard" class="d-flex justify-content-end">
+                    <mat-label>Buscar...</mat-label>
+                    <input matInput (keyup)="applyFilterPedidos($event)" placeholder="Ej. Mia" #inputPedido>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <table mat-table [dataSource]="dataSourcePedidoAsignados" multiTemplateDataRows matSort>
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> N° </th>
+                <td mat-cell *matCellDef="let element; let i = dataIndex;"> {{ i+1 }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cliente">
+                <th mat-header-cell *matHeaderCellDef> Cliente </th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.venta.cliente.persona.nombres | titlecase }}  {{ element.venta.cliente.persona.apellidos | titlecase }}
+                    <!-- <img [src]="verimg('servicios', element.imagen)" style="border-radius: 10px;" width="75px" height="75px"> -->
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ubicacion">
+                <th mat-header-cell *matHeaderCellDef> Ubicacion </th>
+                <td mat-cell *matCellDef="let element"> 
+                    {{ element.venta.venta_ubicacion[0].provincia.provincia | titlecase }}
+                    {{ element.venta.venta_ubicacion[0].canton | titlecase }}
+                    {{ element.venta.venta_ubicacion[0].parroquia | titlecase }} 
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total </th>
+                <td mat-cell *matCellDef="let element"> {{ element.venta.total | currency : 'USD' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let element"> {{ element.venta.estado_id === 6 ? 'En Proceso' : 'Entregado' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef> Accion </th>
+
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon color="primary" (click)="entregarPedido(element)">done_all</mat-icon>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="expand">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button
+                        (click)="(expandedElementPedidoAsignados = expandedElementPedidoAsignados === element ? null : element); $event.stopPropagation()">
+                        <mat-icon *ngIf="expandedElementPedidoAsignados !== element">keyboard_arrow_down</mat-icon>
+                        <mat-icon *ngIf="expandedElementPedidoAsignados === element">keyboard_arrow_up</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="expandedDetailPedido">
+                <td mat-cell *matCellDef="let element"
+                    [attr.colspan]="columnsToDisplayWithExpandPedidoAsignados.length">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElementPedidoAsignados ? 'expanded' : 'collapsed'">
+
+                        <!-- <div class="row col-12" *ngIf="element.descripcion.length > 0;  else NoData">
+                            <div class="col-md-4">
+                                <mat-list role="list">
+                                    <mat-list-item class="d-flex justify-content-start" role="listitem"
+                                        *ngFor="let des of element.descripcion.slice(0, 5)">
+                                        <span class="example-element-name">
+                                            <mat-icon class="fs">fiber_manual_record</mat-icon>
+                                            {{ des | titlecase }}
+                                        </span>
+                                    </mat-list-item>
+                                </mat-list>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-list role="list">
+                                    <mat-list-item class="d-flex justify-content-start" role="listitem"
+                                        *ngFor="let des of element.descripcion.slice(5, 10)">
+                                        <span class="example-element-name">
+                                            <mat-icon class="fs">fiber_manual_record</mat-icon>
+                                            {{ des | titlecase }}
+                                        </span>
+                                    </mat-list-item>
+                                </mat-list>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-list role="list">
+                                    <mat-list-item class="d-flex justify-content-start" role="listitem"
+                                        *ngFor="let des of element.descripcion.slice(10, 15)">
+                                        <span class="example-element-name">
+                                            <mat-icon class="fs">fiber_manual_record</mat-icon>
+                                            {{ des | titlecase }}
+                                        </span>
+                                    </mat-list-item>
+                                </mat-list>
+                            </div>
+                        </div> -->
+
+                        <ng-template #NoData>
+                            No tiene descripcion.
+                        </ng-template>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandPedidoAsignados"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpandPedidoAsignados;"
+                class="example-element-row" [class.example-expanded-row]="expandedElementPedidoAsignados === element">
+            </tr>
+
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetailPedido']" class="example-detail-row"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No hay registros "{{inputPedido.value}}"</td>
+            </tr>
+        </table>
+        <mat-paginator #MatPaginatorPedidoAsignados [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+</div>

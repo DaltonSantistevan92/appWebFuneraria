@@ -62,6 +62,14 @@ export interface Persona {
   celular?: any;
   direccion?: any;
   estado: string;
+  repartidor?: Repartidor[]; 
+}
+
+export interface Repartidor {
+  id: number;
+  persona_id: number;
+  disponible : string;
+  estado: string;
 }
 
 export interface Rol {

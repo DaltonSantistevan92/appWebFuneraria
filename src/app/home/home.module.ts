@@ -27,6 +27,8 @@ import { PrecioTocadoDirective } from '../directives/precio-tocado.directive';
 import { GestionCompraComponent } from './gestion-compra/gestion-compra.component';
 import { SoloNumerosDirective } from '../directives/solo-numeros.directive';
 import { GestionPedidosComponent } from './gestion-pedidos/gestion-pedidos.component';
+import { AsignacionPedidosComponent } from './asignacion-pedidos/asignacion-pedidos.component';
+import { EntregaPedidosComponent } from './entrega-pedidos/entrega-pedidos.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { GestionPedidosComponent } from './gestion-pedidos/gestion-pedidos.compo
     PrecioTocadoDirective,
     SoloNumerosDirective,
     GestionPedidosComponent,
+    AsignacionPedidosComponent,
+    EntregaPedidosComponent,
   ],
   imports: [
     CommonModule,

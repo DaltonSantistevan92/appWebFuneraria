@@ -8,6 +8,8 @@ import { GestionProductoComponent } from './gestion-producto/gestion-producto.co
 import { CatalogoProveedorComponent } from './catalogo-proveedor/catalogo-proveedor.component';
 import { GestionCompraComponent } from './gestion-compra/gestion-compra.component';
 import { GestionPedidosComponent } from './gestion-pedidos/gestion-pedidos.component';
+import { AsignacionPedidosComponent } from './asignacion-pedidos/asignacion-pedidos.component';
+import { EntregaPedidosComponent } from './entrega-pedidos/entrega-pedidos.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
@@ -44,6 +46,16 @@ const routes: Routes = [
       { 
         path : 'gestión-pedidos/consultar-pedidos', 
         component : GestionPedidosComponent,
+        canActivate : [AuthGuard],
+      },
+      { 
+        path : 'gestión-pedidos/asignación-pedidos', 
+        component : AsignacionPedidosComponent,
+        canActivate : [AuthGuard],
+      },
+      { 
+        path : 'gestión-pedidos/entrega-pedidos', 
+        component : EntregaPedidosComponent,
         canActivate : [AuthGuard],
       },
     ]

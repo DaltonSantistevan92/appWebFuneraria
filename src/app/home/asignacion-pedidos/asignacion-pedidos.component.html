@@ -1,0 +1,111 @@
+<app-breadcrumb [listaUrl]="listaUrl"></app-breadcrumb>
+
+
+<!-- <div class="container text-center">
+    <div class="row">
+      <div class="col-sm border">col-sm</div>
+      <div class="col-sm border">col-sm</div>
+      <div class="col-sm border">col-sm</div>
+    </div>
+  </div> -->
+
+
+
+<div class="container text-center">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-12">
+        <div class="col">
+            <div class="example-container col-md-12">
+                <h2>Repartidores</h2>
+                <div    cdkDropList 
+                        class="example-list mt-3" 
+                        id="list-repartidores" 
+                        [cdkDropListData]="listaRepartidor"
+                        [cdkDropListConnectedTo]="['list-new-repartidores']" 
+                        (cdkDropListDropped)="dropRepartidores($event)">
+                    <div    class="example-box" 
+                            *ngFor="let rep of listaRepartidor" 
+                            cdkDrag
+                            [cdkDragData]="rep"
+                            [cdkDragDisabled]="rep.disponible == 'N' ? true : false" >
+                            {{ rep.persona.nombres | titlecase }} {{rep.persona.apellidos | titlecase }} - Disponible : {{ rep.disponible == 'N' ? 'No' : 'Si' }}
+                    </div> <!-- cdkDragLockAxis="y" -->
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="example-container col-md-12">
+                <h2>Pedidos en Proceso</h2>
+                <div    cdkDropList 
+                        class="example-list mt-3" 
+                        id="list-pedidos" 
+                        [cdkDropListData]="listaPedidosEnProceso"
+                        [cdkDropListConnectedTo]="['list-new-pedidos']" 
+                        (cdkDropListDropped)="dropPedidos($event)">
+                    <div    class="example-box" 
+                            *ngFor="let lp of listaPedidosEnProceso" 
+                            cdkDrag
+                            [cdkDragData]="lp">
+                            {{ lp.serie | titlecase}} - {{ lp.cliente.persona.nombres | titlecase }} {{ lp.cliente.persona.apellidos | titlecase }} -
+                            {{ lp.venta_ubicacion[0].provincia.provincia | titlecase }} 
+                            {{(lp.venta_ubicacion[0].canton ? lp.venta_ubicacion[0].canton : '')| titlecase }}  
+                            {{ (lp.venta_ubicacion[0].parroquia ? lp.venta_ubicacion[0].parroquia : '' ) | titlecase }}
+                    </div>  <!-- cdkDragLockAxis="y" -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mt-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-12">
+        <div class="col">
+            <div class="example-container col-md-12">
+                <h2>Repartidor</h2>
+                <div    cdkDropList 
+                        class="example-list mt-3" 
+                        id="list-new-repartidores" 
+                        [cdkDropListData]="newRepartidor"
+                        (cdkDropListDropped)="dropOnList($event)"> <!-- (cdkDropListDropped)="drop($event)" --> 
+                    <div    class="example-box" 
+                            *ngFor="let rep of newRepartidor" 
+                            [cdkDragData]="rep" 
+                            cdkDrag>
+                            {{ rep.persona.nombres | titlecase }} {{ rep.persona.apellidos | titlecase }}
+                    </div> <!-- cdkDragLockAxis="y" -->
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="example-container col-md-12">
+                <h2>Pedidos Asignados</h2>
+                <div    cdkDropList 
+                        class="example-list mt-3" 
+                        id="list-new-pedidos" 
+                        [cdkDropListData]="newPedidoAsignado"
+                        [cdkDropListConnectedTo]="['list-pedidos']" 
+                        (cdkDropListDropped)="dropPedidos($event)"> <!-- (cdkDropListDropped)="dropOnList($event)" -->
+                    <div    class="example-box" 
+                            *ngFor="let lp of newPedidoAsignado" 
+                            [cdkDragData]="lp"
+                            cdkDrag>
+                            {{ lp.serie | titlecase}} - {{ lp.cliente.persona.nombres | titlecase }} {{ lp.cliente.persona.apellidos | titlecase }} -
+                            {{ lp.venta_ubicacion[0].provincia.provincia | titlecase }} 
+                            {{ (lp.venta_ubicacion[0].canton ? lp.venta_ubicacion[0].canton : '') | titlecase }}  
+                            {{ (lp.venta_ubicacion[0].parroquia ? lp.venta_ubicacion[0].parroquia : '' ) | titlecase }}
+                    </div> <!-- cdkDragLockAxis="y" -->
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+<div class="col-lg-12 mt-3">
+    <div class="col-md-12  d-flex justify-content-center">
+        <button mat-button >Cancel</button>
+        <button mat-button color="warn" (click)="asignacionPedido()" cdkFocusInitial>Asignar
+        </button>
+    </div>
+</div>
+
