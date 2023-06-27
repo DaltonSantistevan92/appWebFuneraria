@@ -9,6 +9,7 @@ import { EntregaPedidoService } from './service/entrega-pedido.service';
 import { AsigPedido } from './interface/entrega-pedido.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-entrega-pedidos',
@@ -43,6 +44,8 @@ export class EntregaPedidosComponent implements OnInit {
     private _ep : EntregaPedidoService,
     private fb: FormBuilder,
     private _aus : AuthService,
+    private _alerSer: AlertService,
+
 
 
   ) { }
@@ -97,7 +100,18 @@ export class EntregaPedidosComponent implements OnInit {
   }
 
   entregarPedido(asigPedido: AsigPedido){
-    console.log('entregado', asigPedido);
+    this._ep.setPedidosEntregado(asigPedido.id, asigPedido.repartidor_id).subscribe({
+      next: (resp) => {
+        if (resp.status) {
+          this._alerSer.showAlert('Pedidos', resp.message, 'success');
+        }else {
+          this._alerSer.showAlert('Pedidos', resp.message, 'warning');
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
     
 
   }

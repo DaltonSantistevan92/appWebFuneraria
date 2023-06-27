@@ -16,4 +16,11 @@ export class EntregaPedidoService {
     const url = `${this.api}/verPedidosAsignados/${repartidor_id}`;
     return this.http.get<IntAsigPedido>(url);
   }
+
+  setPedidosEntregado(asignacion_venta_repartidor_id:number,repartidor_id:number): Observable<{status :boolean; message: string}>{
+    const url = `${this.api}/pedidosEntregado/${asignacion_venta_repartidor_id}/${repartidor_id}`;
+    return this.http.get<{status :boolean; message: string}>(url);
+  }
+
+  
 }
