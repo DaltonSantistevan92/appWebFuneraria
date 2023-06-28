@@ -71,7 +71,7 @@ export class AsignacionPedidosComponent implements OnInit {
   listarPedidosEnProceso(){
     this._aps.getPedidosEnProceso().subscribe({
       next : (resp) => {
-        console.log(resp);
+        //console.log(resp);
         if (resp.status) {
           this.listaPedidosEnProceso = resp.data;
         }
@@ -152,11 +152,11 @@ export class AsignacionPedidosComponent implements OnInit {
     let json = {
       asignacion : { repartidor_id : this.newRepartidor[0].id, pedidos_asignados : this.newPedidoAsignado }
     }
-    console.log(json);
+    //console.log(json);
 
     this._aps.saveAsignacion(json).subscribe({
       next : (resp) => {
-        console.log(resp);
+        //console.log(resp);
         if (resp.status) {
           this._alerSer.showAlert('Asignación',resp.message,'success'); 
           this.newRepartidor = [];

@@ -10,6 +10,7 @@ import { AsigPedido } from './interface/entrega-pedido.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-entrega-pedidos',
@@ -73,12 +74,15 @@ export class EntregaPedidosComponent implements OnInit {
   }
 
   mostrarCategoria(repartidor_id : number) {
-    this._ep.getPedidosAsignados(repartidor_id).subscribe({
+    this._ep.getPedidosAsignados(repartidor_id).pipe(delay(1000)).subscribe({
       next: (resp) => {
         if (resp.status) {
-          console.log(resp.data);
-          
+          //console.log('getPedidosAsignados',resp.data);
           this.datosAsigPedidos(resp.data);
+        } else {
+          //console.log('no hay PedidosAsignados',resp.data);
+          this.listaPedidoAsignados = [];
+          this.dataSourcePedidoAsignados = new MatTableDataSource(this.listaPedidoAsignados);
         }
       },
       error: (err) => {
@@ -103,6 +107,7 @@ export class EntregaPedidosComponent implements OnInit {
     this._ep.setPedidosEntregado(asigPedido.id, asigPedido.repartidor_id).subscribe({
       next: (resp) => {
         if (resp.status) {
+          this.mostrarCategoria(asigPedido.repartidor_id);
           this._alerSer.showAlert('Pedidos', resp.message, 'success');
         }else {
           this._alerSer.showAlert('Pedidos', resp.message, 'warning');

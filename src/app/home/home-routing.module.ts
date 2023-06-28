@@ -10,6 +10,7 @@ import { GestionCompraComponent } from './gestion-compra/gestion-compra.componen
 import { GestionPedidosComponent } from './gestion-pedidos/gestion-pedidos.component';
 import { AsignacionPedidosComponent } from './asignacion-pedidos/asignacion-pedidos.component';
 import { EntregaPedidosComponent } from './entrega-pedidos/entrega-pedidos.component';
+import { InventarioComponent } from './inventario/inventario.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
@@ -56,6 +57,11 @@ const routes: Routes = [
       { 
         path : 'gestión-pedidos/entrega-pedidos', 
         component : EntregaPedidosComponent,
+        canActivate : [AuthGuard],
+      },
+      { 
+        path : 'inventario/kardex', 
+        component : InventarioComponent,
         canActivate : [AuthGuard],
       },
     ]

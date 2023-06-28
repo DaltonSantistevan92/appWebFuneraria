@@ -29,6 +29,7 @@ import { SoloNumerosDirective } from '../directives/solo-numeros.directive';
 import { GestionPedidosComponent } from './gestion-pedidos/gestion-pedidos.component';
 import { AsignacionPedidosComponent } from './asignacion-pedidos/asignacion-pedidos.component';
 import { EntregaPedidosComponent } from './entrega-pedidos/entrega-pedidos.component';
+import { InventarioComponent } from './inventario/inventario.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { EntregaPedidosComponent } from './entrega-pedidos/entrega-pedidos.compo
     GestionPedidosComponent,
     AsignacionPedidosComponent,
     EntregaPedidosComponent,
+    InventarioComponent,
   ],
   imports: [
     CommonModule,

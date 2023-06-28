@@ -1,0 +1,207 @@
+<app-breadcrumb [listaUrl]="listaUrl"></app-breadcrumb>
+
+
+<!-- <div class="row mt-3">
+    <div class="col-12">
+        <div class="card">
+            <div class="div" style="overflow: auto;">
+                <table id="tabla-inventario" class="table table-bordered table-striped table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">N°</th>
+                            <th rowspan="2">Fecha</th>
+                            <th colspan="1" class="text-center">Movimientos</th>
+                            <th colspan="3" class="text-center">Entradas (+)</th>
+                            <th colspan="3" class="text-center">Salidas (-)</th>
+                            <th colspan="3" class="text-center">Disponibles <i class="fas fa-check"></i> </th>
+                        </tr>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Cant.</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                            <th>Cant.</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                            <th>Cant.</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    
+                    <tfoot>
+
+                    </tfoot>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="container text-center">
+    <form [formGroup]="formInventario">
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Productos</mat-label>
+                <mat-select formControlName="producto_id">
+                    <mat-option>-- Seleccione un Producto--</mat-option>
+                    <mat-option *ngFor="let p of productos" [value]="p.id">
+                        {{p.nombre | titlecase}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formInventario.get('producto_id')?.errors?.['required']">
+                    El producto es obligatorio.
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Fecha Inicio</mat-label>
+                <input formControlName="fecha_inicio" matInput type="date">
+                <mat-error *ngIf="formInventario.get('fecha_inicio')?.errors?.['required']">
+                    La fecha inicio es obligatorio
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Fecha Fin</mat-label>
+                <input formControlName="fecha_fin" matInput type="date">
+                <mat-error *ngIf="formInventario.get('fecha_fin')?.errors?.['required']">
+                    La fecha fin es obligatorio
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <button class="mt-2"  mat-stroked-button color="primary" (click)="consultar()">Consultar</button>
+          </div>
+        </div>
+    </form>
+  </div>
+
+
+<div class="row mt-3" *ngIf="band; else noData">
+    <div class="col-12">
+      <div class="card">
+        <div class="div" style="overflow: auto;">
+          <table mat-table class="table table-bordered table-light table-striped table-hover text-center mat-elevation-z8" [dataSource]="dataSourceInventario">
+            
+            <ng-container matColumnDef="numero">
+              <th mat-header-cell *matHeaderCellDef [attr.rowspan]="1" [ngStyle]="{'display': 'none'}"></th>
+              <td mat-cell *matCellDef="let row">{{ row.numero }}</td>
+            </ng-container>
+           
+            <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef [attr.rowspan]="1" [ngStyle]="{'display': 'none'}"></th>
+              <td mat-cell *matCellDef="let row">{{ row.fecha }}</td>
+            </ng-container>
+           
+            <ng-container matColumnDef="tipo">
+              <th mat-header-cell *matHeaderCellDef>Tipo</th>
+              <td mat-cell *matCellDef="let row">{{ row.tipo }}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="entrada_cantidad">
+              <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+              <td mat-cell *matCellDef="let row">{{ row.entrada_cantidad }}</td>
+            </ng-container>
+           
+            <ng-container matColumnDef="entrada_precio">
+              <th mat-header-cell *matHeaderCellDef>Precio de Compra</th>
+              <td mat-cell *matCellDef="let row">{{ row.entrada_precio | currency : 'USD' }}</td>
+            </ng-container>
+      
+            <ng-container matColumnDef="entrada_total">
+              <th mat-header-cell *matHeaderCellDef>Total</th>
+              <td mat-cell *matCellDef="let row">{{ row.entrada_total  | currency : 'USD' }}</td>
+            </ng-container>
+           
+            <ng-container matColumnDef="salida_cantidad">
+              <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+              <td mat-cell *matCellDef="let row">{{ row.salida_cantidad }}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="salida_precio">
+              <th mat-header-cell *matHeaderCellDef>Precio de Venta</th>
+              <td mat-cell *matCellDef="let row">{{ row.salida_precio  | currency : 'USD' }}</td>
+            </ng-container>
+         
+            <ng-container matColumnDef="salida_total">
+              <th mat-header-cell *matHeaderCellDef>Total</th>
+              <td mat-cell *matCellDef="let row">{{ row.salida_total  | currency : 'USD' }}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="disponible_cantidad">
+              <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+              <td mat-cell *matCellDef="let row">{{ row.disponible_cantidad }}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="disponible_precio">
+              <th mat-header-cell *matHeaderCellDef>Precio</th>
+              <td mat-cell *matCellDef="let row">{{ row.disponible_precio  | currency : 'USD'}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="disponible_total">
+              <th mat-header-cell *matHeaderCellDef>Total</th>
+              <td mat-cell *matCellDef="let row">{{ row.disponible_total  | currency : 'USD'}}</td>
+            </ng-container>
+
+            <!-- Header number -->
+            <ng-container matColumnDef="header-row-number-group">
+                <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="1" [attr.rowspan]="2"> N° </th>
+            </ng-container>
+
+            <!-- Header fecha -->
+            <ng-container matColumnDef="header-row-fecha-group">
+                <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="1" [attr.rowspan]="2"> Fecha </th>
+            </ng-container>
+
+            <!-- Header movimiento -->
+            <ng-container matColumnDef="header-row-movimiento-group">
+                <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="1" > Movimientos </th>
+            </ng-container>
+
+            <!-- Header row entradas group -->
+            <ng-container matColumnDef="header-row-entradas-group">
+                <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="3"> Entradas </th>
+            </ng-container>
+
+            <!-- Header row salidas group -->
+            <ng-container matColumnDef="header-row-salidas-group">
+                <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="3"> Salidas </th>
+            </ng-container>
+
+            <!-- Header row disponibles group -->
+            <ng-container matColumnDef="header-row-disponibles-group">
+                <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="3"> Disponibles </th>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="[
+                'header-row-number-group',
+                'header-row-fecha-group',
+                'header-row-movimiento-group',
+                'header-row-entradas-group',
+                'header-row-salidas-group',
+                'header-row-disponibles-group'
+                ]">
+            </tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsInventario"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsInventario;"></tr>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-template #noData>
+    <h2>No hay Información..! por favor consulte</h2>
+  </ng-template>
+  
+  

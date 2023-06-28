@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IntUrlActivate } from 'src/app/shared/breadcrumb/interfaces/bread.interface';
 import { Estado } from '../gestion-afiliacion/interfaces/estados.interface';
 import { AfilicacionService } from '../gestion-afiliacion/services/afilicacion.service';
-import { map } from 'rxjs';
+import { map, delay } from 'rxjs';
 import { PedidosService } from './services/pedidos.service';
 import { Venta } from './interfaces/pedidos.interface';
 import { MatTableDataSource } from '@angular/material/table';
