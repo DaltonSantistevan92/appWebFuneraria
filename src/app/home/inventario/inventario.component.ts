@@ -101,7 +101,7 @@ export class InventarioComponent implements OnInit {
   servicioKardex(producto_id:number, fecha_inicio:string, fecha_fin:string){
     this._ins.getKardex(producto_id,fecha_inicio,fecha_fin).subscribe({
       next : (resp) => {
-       console.log(resp);
+       //console.log(resp);
        if (resp.status) {
           this.band = true;
           this.datosInventario(resp.data); 

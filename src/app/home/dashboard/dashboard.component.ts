@@ -5,6 +5,7 @@ import { DashService } from './services/dash.service';
 
 import Chart from 'chart.js/auto';
 import * as JSC from 'jscharting';
+import { AfiliadosInactivosAndActivos, CompraVentaTotales } from './interfaces/dashboard.interface';
 
 
 export const CHART_COLORS = {
@@ -24,6 +25,9 @@ export const CHART_COLORS = {
 })
 export class DashboardComponent implements OnInit {
   listaUrl: IntUrlActivate[] = [];
+
+  afiliadosActivosInactivos! : AfiliadosInactivosAndActivos;
+  dataTotalCV! : CompraVentaTotales;
 
   constructor(
     private activedRoute: ActivatedRoute,
@@ -47,8 +51,29 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.listaUrl = this.activedRoute.snapshot.url;
+    this.cantidadAfiliados();
+    this.totalesGenerales();
     this.chartBarCompra();
     this.kpiEstadoPedido();
+  }
+
+  cantidadAfiliados(){
+    this._ds.getCantidadAfiliados().subscribe({
+      next: (resp) => {
+        this.afiliadosActivosInactivos = resp.data;
+      },
+      error: (err) => {}
+    });
+  }
+
+  totalesGenerales(){
+    this._ds.getTotalCompraAndVenta().subscribe({
+      next: (resp) => {
+        //console.log(resp);
+        this.dataTotalCV = resp.data;
+      },
+      error: (err) => {}
+    });
   }
 
   chartBarCompra() {
@@ -123,7 +148,6 @@ export class DashboardComponent implements OnInit {
     this._ds.getkpiTotalesPedidosEstados().subscribe({
       next: (resp) => {
         if (resp.status) {
-
           const chart = new JSC.Chart('myChartPedidos', {
             debug: false,
             legend: {
@@ -133,17 +157,16 @@ export class DashboardComponent implements OnInit {
             title_position: 'center',
             defaultSeries_type: 'pieDonut',
             defaultPoint_label_text: '<b>%name</b>',
-            title_label_text: '',
+            title_label_text: 'Totales De Pedidos Por Estados',
             yAxis: { label_text: 'Total', formatString: 'n' },
             series: resp.series
           });
         }
       },
-      error: () => {
-
+      error: (err) => {
+        console.log(err);
       }
     });
   }
-
-
+  
 }

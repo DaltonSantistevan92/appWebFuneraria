@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { IntDashCompraVenta } from '../interfaces/dashboard.interface';
+import { IntAfiliadosInactivosAndActivos, IntCompraVentaTotales, IntDashCompraVenta } from '../interfaces/dashboard.interface';
 import { IntKPIPedidoEstado } from '../interfaces/kpi-totales-pedido-estado.interface';
 
 @Injectable({
@@ -23,6 +23,16 @@ export class DashService {
     return this.http.get<IntKPIPedidoEstado>(url);
   }
 
+  getCantidadAfiliados(): Observable<IntAfiliadosInactivosAndActivos>{
+    const url = `${this.api}/cantidadAfiliado`;
+    return this.http.get<IntAfiliadosInactivosAndActivos>(url);
+  }
 
+  getTotalCompraAndVenta(): Observable<IntCompraVentaTotales>{
+    const url = `${this.api}/totalCompraAndVenta`;
+    return this.http.get<IntCompraVentaTotales>(url);
+  }
+
+  
   
 }

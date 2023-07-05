@@ -30,6 +30,8 @@ import { GestionPedidosComponent } from './gestion-pedidos/gestion-pedidos.compo
 import { AsignacionPedidosComponent } from './asignacion-pedidos/asignacion-pedidos.component';
 import { EntregaPedidosComponent } from './entrega-pedidos/entrega-pedidos.component';
 import { InventarioComponent } from './inventario/inventario.component';
+import { AfiliacionesComponent } from './reportes/afiliaciones/afiliaciones.component';
+import { ModalAfiliadosComponent } from './reportes/afiliaciones/modal-afiliados/modal-afiliados.component';
 
 
 @NgModule({
@@ -57,6 +59,8 @@ import { InventarioComponent } from './inventario/inventario.component';
     AsignacionPedidosComponent,
     EntregaPedidosComponent,
     InventarioComponent,
+    AfiliacionesComponent,
+    ModalAfiliadosComponent,
   ],
   imports: [
     CommonModule,

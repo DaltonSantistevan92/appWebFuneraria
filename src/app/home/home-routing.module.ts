@@ -11,6 +11,7 @@ import { GestionPedidosComponent } from './gestion-pedidos/gestion-pedidos.compo
 import { AsignacionPedidosComponent } from './asignacion-pedidos/asignacion-pedidos.component';
 import { EntregaPedidosComponent } from './entrega-pedidos/entrega-pedidos.component';
 import { InventarioComponent } from './inventario/inventario.component';
+import { AfiliacionesComponent } from './reportes/afiliaciones/afiliaciones.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
@@ -62,6 +63,11 @@ const routes: Routes = [
       { 
         path : 'inventario/kardex', 
         component : InventarioComponent,
+        canActivate : [AuthGuard],
+      },
+      { 
+        path : 'reporte/afiliación', 
+        component : AfiliacionesComponent,
         canActivate : [AuthGuard],
       },
     ]
