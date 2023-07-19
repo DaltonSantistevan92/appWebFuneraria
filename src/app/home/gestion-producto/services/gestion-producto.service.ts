@@ -15,8 +15,18 @@ export class GestionProductoService {
   http = inject(HttpClient);
 
   //Categoria
-  getCategorias(): Observable<IntCate>{
+  getCategorias(): Observable<IntCate>{//creo que ya no se utiliza
     const url = `${this.api}/categorias`;
+    return this.http.get<IntCate>(url);
+  }
+
+  getCategoriasServicios(): Observable<IntCate>{
+    const url = `${this.api}/selectCategoriasServicios`;
+    return this.http.get<IntCate>(url);
+  }
+
+  getCategoriasProductos(): Observable<IntCate>{
+    const url = `${this.api}/selectCategoriasProductos`;
     return this.http.get<IntCate>(url);
   }
 

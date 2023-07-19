@@ -33,7 +33,7 @@ export class GestionProductoComponent implements OnInit {
   listaUrl: IntUrlActivate[] = [];
 
   //Categoria
-  displayedColumnsCategoria: string[] = ['id','img','nombre_categoria'];
+  displayedColumnsCategoria: string[] = ['id','img','nombre_categoria','pertenece'];
   columnsToDisplayWithExpandCategoria = [...this.displayedColumnsCategoria, 'accion'];
   dataSourceCategoria!: MatTableDataSource<Categorias>;
 

@@ -42,6 +42,7 @@ export class CrearEditarCategoriaComponent implements OnInit {
     this.formCategoria = this.fb.group({
       nombre_categoria: ['', [Validators.required, Validators.minLength(3)]],
       img: [''],
+      pertenece : ['',[Validators.required]]
     });
   }
 
@@ -56,8 +57,8 @@ export class CrearEditarCategoriaComponent implements OnInit {
       this.listadoSeleccionado = this.data;
       this.serviceImagen(this.data.img);
 
-      const { nombre_categoria, img  } = this.data;
-      this.formCategoria.patchValue({ nombre_categoria, img  });
+      const { nombre_categoria, img, pertenece  } = this.data;
+      this.formCategoria.patchValue({ nombre_categoria, img, pertenece });
     }
   }
 
@@ -81,7 +82,7 @@ export class CrearEditarCategoriaComponent implements OnInit {
       const form : Categorias = this.formCategoria.value;
       const data = this.addObjeto(form);
     
-      //servicio para guardar la img en el backend
+      // //servicio para guardar la img en el backend
       this.servicioGuardarImg(this.files,'img','categorias','subirArchivo',data.categoria.img);
       this.registrarCategoria(data);
     }
@@ -104,6 +105,7 @@ export class CrearEditarCategoriaComponent implements OnInit {
     let categoria : Categorias = {
       nombre_categoria : cate.nombre_categoria,
       img : (this.activeImage) ? cate.img : this.imagenDefault,
+      pertenece : cate.pertenece
     }
 
     if (cate.id) {

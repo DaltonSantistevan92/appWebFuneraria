@@ -60,12 +60,24 @@ export class CrearEditarServicioComponent implements OnInit {
     }
   }
 
+  //AHI QUE MODIFICAR
+  // mostrarCategoriaServicio2() {
+  //   this._gp.getCategorias().pipe(
+  //     map((resp) => resp.data.filter((categoria) => [ 3 ].includes(categoria.id!)).sort((a, b) => a.nombre_categoria.localeCompare(b.nombre_categoria)))
+  //   ).subscribe({
+  //     next: (categoriaFiltradosOrdenados) => {
+  //       this.listaCategoria = categoriaFiltradosOrdenados;
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
+
   mostrarCategoriaServicio() {
-    this._gp.getCategorias().pipe(
-      map((resp) => resp.data.filter((categoria) => [ 3 ].includes(categoria.id!)).sort((a, b) => a.nombre_categoria.localeCompare(b.nombre_categoria)))
-    ).subscribe({
-      next: (categoriaFiltradosOrdenados) => {
-        this.listaCategoria = categoriaFiltradosOrdenados;
+    this._gp.getCategoriasServicios().subscribe({
+      next: (resp) => {
+       this.listaCategoria = resp.data;
       },
       error: (err) => {
         console.log(err);

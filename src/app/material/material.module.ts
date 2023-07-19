@@ -15,7 +15,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { MatRadioModule } from '@angular/material/radio'; 
 
 
 
@@ -35,7 +35,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatExpansionModule,
     MatListModule,
     MatTabsModule,
-    DragDropModule
+    DragDropModule,
+    MatRadioModule
   ], 
   exports : [
     MatDialogModule,
@@ -51,7 +52,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatExpansionModule,
     MatListModule,
     MatTabsModule,
-    DragDropModule
+    DragDropModule,
+    MatRadioModule
   ] 
 })
 export class MaterialModule { }

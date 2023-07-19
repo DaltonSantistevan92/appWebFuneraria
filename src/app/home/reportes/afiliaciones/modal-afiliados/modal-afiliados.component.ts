@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AfiliacionesService } from '../services/afiliaciones.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,6 +22,10 @@ export class ModalAfiliadosComponent implements OnInit {
    @ViewChild(MatSort) sortAfiliadosActivos!: MatSort;
    listaAfiliadosActivos: AfiliadosActivos[] = [];
 
+   @ViewChild('inputAfiliadosActivos') inputAfiliadosActivos!: ElementRef;
+
+   bandera : boolean = false;
+
   constructor(
     public dialog: MatDialogRef<ModalAfiliadosComponent>,
     private _as : AfiliacionesService,
@@ -37,9 +41,13 @@ export class ModalAfiliadosComponent implements OnInit {
   mostraAfiliadosActivos(){
     this._as.getAfiliadosActivos().subscribe({
       next : (resp) => {
-        console.log(resp);
         if (resp.status) {
+          //console.log('mostrar afiliados en modal',resp);
           this.datosAfiliadosActivos(resp.data);
+          this.bandera = false;
+        }else {
+          //console.log('NO HAY AFILIADOS',resp);
+          this.bandera = true;
         }
       },
       error : (err) => {
@@ -64,7 +72,7 @@ export class ModalAfiliadosComponent implements OnInit {
   }
 
   getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Mostrando Compras`;
+    const initialText = `Mostrando Afiliados`;
 
     if (length == 0 || pageSize == 0) {
       return `${initialText} 0 de ${length}`;
@@ -101,15 +109,10 @@ export class ModalAfiliadosComponent implements OnInit {
 
   applyFilterAfiliadosActivos(event : Event){
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSourceAfiliadosActivos.filter = filterValue.trim().toLowerCase();
+    this.dataSourceAfiliadosActivos.filter = filterValue.trim().toLowerCase();    
     if (this.dataSourceAfiliadosActivos.paginator) {
       this.dataSourceAfiliadosActivos.paginator.firstPage();
     }
-  }
-
-  seleccionarAfiliado(afiliado: AfiliadosActivos){
-    console.log(afiliado);
-    
   }
 
 }

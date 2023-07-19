@@ -154,12 +154,23 @@ export class CrearEditarProductoComponent implements OnInit {
     });
   }
 
+  // mostrarCategoriaProducto2() {
+  //   this._gp.getCategorias().pipe(
+  //     map((resp) => resp.data.filter((categoria) => [ 1,2 ].includes(categoria.id!)).sort((a, b) => a.nombre_categoria.localeCompare(b.nombre_categoria)))
+  //   ).subscribe({
+  //     next: (categoriaFiltradosOrdenados) => {
+  //       this.listaCategoria = categoriaFiltradosOrdenados;
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
+
   mostrarCategoriaProducto() {
-    this._gp.getCategorias().pipe(
-      map((resp) => resp.data.filter((categoria) => [ 1,2 ].includes(categoria.id!)).sort((a, b) => a.nombre_categoria.localeCompare(b.nombre_categoria)))
-    ).subscribe({
-      next: (categoriaFiltradosOrdenados) => {
-        this.listaCategoria = categoriaFiltradosOrdenados;
+    this._gp.getCategoriasProductos().subscribe({
+      next: (resp) => {
+        this.listaCategoria = resp.data;
       },
       error: (err) => {
         console.log(err);

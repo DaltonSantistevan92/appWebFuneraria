@@ -9,6 +9,7 @@ export interface Categorias {
   nombre_categoria: string;
   img: string;
   estado?: string;
+  pertenece : string;
 }
 
 

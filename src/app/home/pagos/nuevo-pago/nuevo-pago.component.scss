@@ -1,5 +1,19 @@
 .example-full-width { width: 100%; min-width: 200px; max-width: 300px; } 
 
+/* expasion */
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
 
 /* table */
 
@@ -18,7 +32,6 @@ th {
     min-width: 20px;
     box-sizing: border-box;
     padding: 8px !important;
-    text-align: center;
 }
 
 

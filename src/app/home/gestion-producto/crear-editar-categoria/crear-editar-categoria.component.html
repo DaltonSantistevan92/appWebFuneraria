@@ -29,6 +29,16 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
+                
+                <div class="col-md-12" [class.invalid]="formCategoria.invalid && formCategoria.touched">
+                    <mat-radio-group formControlName="pertenece">
+                        <mat-radio-button value="P">Producto</mat-radio-button>
+                        <mat-radio-button value="S">Servicio</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error *ngIf="formCategoria.invalid && formCategoria.touched">
+                        Seleccione una opción válida.
+                    </mat-error>
+                </div>
 
                 <div class="col-sm-12 mt-2">
 

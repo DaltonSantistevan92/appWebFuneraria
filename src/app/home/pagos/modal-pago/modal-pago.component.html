@@ -1,0 +1,64 @@
+<div class="row col-12">
+    <h2 mat-dialog-title> Nuevo Pago </h2>
+    <form [formGroup]="formPago">
+        <div class="row mt-2">
+            <div class="col-sm-6">
+                <mat-form-field  class="example-full-width" appearance="outline">
+                    <mat-label>Nombre del Afiliado</mat-label>
+                    <input matInput formControlName="cliente" type="text" appSoloLetras readonly>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field  class="example-full-width" appearance="outline">
+                    <mat-label>Mes</mat-label>
+                    <input matInput formControlName="mes" type="number" appSoloNumeros min="1">
+                    <mat-error *ngIf="formPago.get('mes')?.value === 0">
+                        Ingrese la cantidad de meses a pagar
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-6">
+                <mat-form-field  class="example-full-width" appearance="outline">
+                    <mat-label>Letras Pendientes</mat-label>
+                    <input matInput formControlName="letras_pendientes" type="text" readonly>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+                <mat-form-field  class="example-full-width" appearance="outline">
+                    <mat-label>Monto Mensual a Pagar</mat-label>
+                    <input matInput formControlName="monto_mensual" type="text" readonly>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-6">
+                <mat-form-field  class="example-full-width" appearance="outline">
+                    <mat-label>Total a Pagar</mat-label>
+                    <input matInput formControlName="total_pagar" type="text" readonly>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 mt-2">
+
+                <div class="row">
+                    <mat-dialog-actions align="center">
+                    <button mat-button mat-dialog-close (click)="cerrar()">Cancelar</button>
+                    <button mat-stroked-button
+                            color="primary"  
+                            (click)="pagar()"
+                            [disabled]="formPago.invalid"
+                            [mat-dialog-close]="formPago.get('afiliado_id')?.value" 
+                            cdkFocusInitial>
+                            Pagar
+                    </button>
+                    </mat-dialog-actions>
+                </div>
+
+            </div>
+                
+        </div>
+    </form>
+    
+</div>
+
+

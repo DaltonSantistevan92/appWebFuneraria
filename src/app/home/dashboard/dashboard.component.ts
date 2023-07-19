@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IntUrlActivate } from 'src/app/shared/breadcrumb/interfaces/bread.interface';
 import { DashService } from './services/dash.service';
@@ -23,11 +23,14 @@ export const CHART_COLORS = {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterContentInit {
   listaUrl: IntUrlActivate[] = [];
 
   afiliadosActivosInactivos! : AfiliadosInactivosAndActivos;
   dataTotalCV! : CompraVentaTotales;
+
+  @ViewChild('myChart') myChart! : ElementRef;
+  @ViewChild('myChartPedidos', { static: true }) chartPedidos? : ElementRef;
 
   constructor(
     private activedRoute: ActivatedRoute,
@@ -54,8 +57,16 @@ export class DashboardComponent implements OnInit {
     this.cantidadAfiliados();
     this.totalesGenerales();
     this.chartBarCompra();
-    this.kpiEstadoPedido();
+    
   }
+
+  ngAfterContentInit(): void {
+    if (!this.chartPedidos) return;
+    this.kpiEstadoPedido();
+    
+  }
+
+
 
   cantidadAfiliados(){
     this._ds.getCantidadAfiliados().subscribe({
@@ -148,7 +159,7 @@ export class DashboardComponent implements OnInit {
     this._ds.getkpiTotalesPedidosEstados().subscribe({
       next: (resp) => {
         if (resp.status) {
-          const chart = new JSC.Chart('myChartPedidos', {
+          const chart = new JSC.Chart(this.chartPedidos?.nativeElement, {
             debug: false,
             legend: {
               position: 'inside left bottom',

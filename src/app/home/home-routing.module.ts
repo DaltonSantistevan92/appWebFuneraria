@@ -12,68 +12,26 @@ import { AsignacionPedidosComponent } from './asignacion-pedidos/asignacion-pedi
 import { EntregaPedidosComponent } from './entrega-pedidos/entrega-pedidos.component';
 import { InventarioComponent } from './inventario/inventario.component';
 import { AfiliacionesComponent } from './reportes/afiliaciones/afiliaciones.component';
+import { NuevoPagoComponent } from './pagos/nuevo-pago/nuevo-pago.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'inicio/dashboard', pathMatch : 'full'},
   {
-    path : '',
-    component : HomeComponent,
-    canActivate : [AuthGuard],
+    path : '', component : HomeComponent, canActivate : [AuthGuard],
     children : [
-      { 
-        path : 'inicio/dashboard', 
-        component : DashboardComponent,
-        canActivate : [AuthGuard],
-      },
-      { 
-        path : 'gestión-afiliación/consultar', 
-        component : GestionAfiliacionComponent,
-        canActivate : [AuthGuard],
-      },
-      { 
-        path : 'gestión-producto/nuevos-registros', 
-        component : GestionProductoComponent,
-        canActivate : [AuthGuard],
-      },
-      { 
-        path : 'catálogo-proveedor/nuevo-catálogo', 
-        component : CatalogoProveedorComponent,
-        canActivate : [AuthGuard],
-      },
-      { 
-        path : 'gestión-compra/consultar-compras', 
-        component : GestionCompraComponent,
-        canActivate : [AuthGuard],
-      },
-      { 
-        path : 'gestión-pedidos/consultar-pedidos', 
-        component : GestionPedidosComponent,
-        canActivate : [AuthGuard],
-      },
-      { 
-        path : 'gestión-pedidos/asignación-pedidos', 
-        component : AsignacionPedidosComponent,
-        canActivate : [AuthGuard],
-      },
-      { 
-        path : 'gestión-pedidos/entrega-pedidos', 
-        component : EntregaPedidosComponent,
-        canActivate : [AuthGuard],
-      },
-      { 
-        path : 'inventario/kardex', 
-        component : InventarioComponent,
-        canActivate : [AuthGuard],
-      },
-      { 
-        path : 'reporte/afiliación', 
-        component : AfiliacionesComponent,
-        canActivate : [AuthGuard],
-      },
+      { path : 'inicio/dashboard', component : DashboardComponent, canActivate : [AuthGuard] },
+      { path : 'gestión-afiliación/consultar', component : GestionAfiliacionComponent, canActivate : [AuthGuard] },
+      { path : 'gestión-producto/nuevos-registros', component : GestionProductoComponent, canActivate : [AuthGuard] },
+      { path : 'catálogo-proveedor/nuevo-catálogo', component : CatalogoProveedorComponent, canActivate : [AuthGuard] },
+      { path : 'gestión-compra/consultar-compras', component : GestionCompraComponent, canActivate : [AuthGuard] },
+      { path : 'gestión-pedidos/consultar-pedidos', component : GestionPedidosComponent,canActivate : [AuthGuard] },
+      { path : 'gestión-pedidos/asignación-pedidos', component : AsignacionPedidosComponent, canActivate : [AuthGuard] },
+      { path : 'gestión-pedidos/entrega-pedidos', component : EntregaPedidosComponent, canActivate : [AuthGuard] },
+      { path : 'inventario/kardex', component : InventarioComponent, canActivate : [AuthGuard] },
+      { path : 'reporte/afiliación', component : AfiliacionesComponent, canActivate : [AuthGuard] },
+      { path : 'pagos/nuevo-pago', component : NuevoPagoComponent, canActivate : [AuthGuard] },
     ]
   },
-
-
 ];
 
 @NgModule({
