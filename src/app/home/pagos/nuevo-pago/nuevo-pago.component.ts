@@ -64,7 +64,7 @@ export class NuevoPagoComponent implements OnInit {
     this.formNuevoPago.get('afiliado_id')?.valueChanges.subscribe(afiliado_id =>{
       this._as.consultaAfiliadoOrTodos(afiliado_id).subscribe({
         next : (resp) => {
-          console.log('tabla pagos ',resp);
+          //console.log('tabla pagos ',resp);
           //console.log('valueChanges',resp);
           if (resp.status) {
             this.datosAfiliadosResponse(resp.data);
@@ -171,7 +171,7 @@ export class NuevoPagoComponent implements OnInit {
         //console.log('modal-pago', afiliado_id);
         this._as.consultaAfiliadoOrTodos(afiliado_id).subscribe({
           next : (resp) => {
-            console.log('actualizando tabla',resp);
+            //console.log('actualizando tabla',resp);
             //console.log('valueChanges',resp);
             if (resp.status) {
               this.datosAfiliadosResponse(resp.data);

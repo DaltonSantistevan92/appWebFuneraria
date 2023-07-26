@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { IntAfiliadosInactivosAndActivos, IntCompraVentaTotales, IntDashCompraVenta } from '../interfaces/dashboard.interface';
 import { IntKPIPedidoEstado } from '../interfaces/kpi-totales-pedido-estado.interface';
+import { IntDashPagos } from '../interfaces/dash-pagos.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,13 @@ export class DashService {
     const url = `${this.api}/totalCompraAndVenta`;
     return this.http.get<IntCompraVentaTotales>(url);
   }
+
+  getDashPagos(): Observable<IntDashPagos>{
+    const url = `${this.api}/dashPagos`;
+    return this.http.get<IntDashPagos>(url);
+  }
+
+  
 
   
   

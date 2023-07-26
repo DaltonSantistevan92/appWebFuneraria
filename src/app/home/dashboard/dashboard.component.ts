@@ -56,7 +56,8 @@ export class DashboardComponent implements OnInit, AfterContentInit {
     this.listaUrl = this.activedRoute.snapshot.url;
     this.cantidadAfiliados();
     this.totalesGenerales();
-    this.chartBarCompra();
+    this.chartBarCompraVenta();
+    this.chartBarPagos();
     
   }
 
@@ -87,7 +88,7 @@ export class DashboardComponent implements OnInit, AfterContentInit {
     });
   }
 
-  chartBarCompra() {
+  chartBarCompraVenta() {
     this._ds.getDashCompra().subscribe({
       next: (resp) => {
         if (resp) {
@@ -153,6 +154,72 @@ export class DashboardComponent implements OnInit, AfterContentInit {
         console.log(err);
       }
     });
+  }
+
+  chartBarPagos(){
+    this._ds.getDashPagos().subscribe({
+      next: (resp) => {
+        console.log('dash pagos',resp);
+
+        if (resp.pagos.data.length > 0) {
+          const ctx = document.getElementById('myChartPagos') as HTMLCanvasElement;
+
+          if (ctx !== null) {
+            //grafico de pagos totales
+            const labels = resp.pagos.labels;
+
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: `Pagos - ${resp.pagos.anio}`,
+                    data: resp.pagos.data,
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 205, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(201, 203, 207, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 205, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                      'rgb(255, 99, 132)',
+                      'rgb(255, 159, 64)',
+                      'rgb(255, 205, 86)',
+                      'rgb(75, 192, 192)',
+                      'rgb(54, 162, 235)',
+                      'rgb(153, 102, 255)',
+                      'rgb(201, 203, 207)',
+                      'rgb(255, 99, 132)',
+                      'rgb(255, 159, 64)',
+                      'rgb(255, 205, 86)',
+                      'rgb(75, 192, 192)',
+                      'rgb(54, 162, 235)',
+                    ],
+                    borderWidth: 1,
+                    stack: 'Stack 0',
+                  },
+                ]
+              },options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              },
+            })
+          }
+        }
+      }
+    })
   }
 
   kpiEstadoPedido() {

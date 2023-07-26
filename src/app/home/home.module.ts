@@ -35,6 +35,8 @@ import { ModalAfiliadosComponent } from './reportes/afiliaciones/modal-afiliados
 import { NuevoPagoComponent } from './pagos/nuevo-pago/nuevo-pago.component';
 import { ModalAfiComponent } from './pagos/modal-afi/modal-afi.component';
 import { ModalPagoComponent } from './pagos/modal-pago/modal-pago.component';
+import { ProductosMasVendidosComponent } from './reportes/productos-mas-vendidos/productos-mas-vendidos.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 
 @NgModule({
@@ -67,6 +69,8 @@ import { ModalPagoComponent } from './pagos/modal-pago/modal-pago.component';
     NuevoPagoComponent,
     ModalAfiComponent,
     ModalPagoComponent,
+    ProductosMasVendidosComponent,
+    InicioComponent,
   ],
   imports: [
     CommonModule,

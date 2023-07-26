@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     private renderer : Renderer2,
     private _auSer : AuthService
 
-  ) { }
+  ) { } 
 
   ngOnInit(): void {
     this.payloadServiceSubscription = this._auSer.$getObjSourcePayload.subscribe( (resp) => {

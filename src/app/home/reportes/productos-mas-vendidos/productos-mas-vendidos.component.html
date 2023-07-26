@@ -1,0 +1,125 @@
+<app-breadcrumb [listaUrl]="listaUrl"></app-breadcrumb>
+
+<mat-toolbar color="primary">
+    <div class="container">
+        <form [formGroup]="formProductoVendido">
+            <div class="row mb-3">
+                <div class="col-6 col-md-4 col-lg-3 form-group">
+                    <label>Desde</label>
+                    <input formControlName="fecha_inicio" type="date" class="form-control">
+                    <ng-container *ngIf="formProductoVendido.get('fecha_inicio')?.dirty || formProductoVendido.get('fecha_inicio')?.touched">
+                        <mat-error *ngIf="formProductoVendido.get('fecha_inicio')?.errors?.['required']">
+                            La fecha de inicio es requerido.
+                        </mat-error>
+                    </ng-container>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 form-group">
+                    <label>Hasta</label>
+                    <input formControlName="fecha_fin" type="date" class="form-control">
+                    <ng-container *ngIf="formProductoVendido.get('fecha_fin')?.dirty || formProductoVendido.get('fecha_fin')?.touched">
+                        <mat-error *ngIf="formProductoVendido.get('fecha_fin')?.errors?.['required']">
+                            La fecha de fin es requerido.
+                        </mat-error>
+                    </ng-container>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3" style="margin-top: 17px;">
+                    <div class="row">
+                        <div class="col">
+                            <button class="mt-2" mat-button color="primary" (click)="consultar()"> <mat-icon>search</mat-icon> Consultar </button>
+                        </div>
+                        <div class="col ">
+                            <button class="mt-2" mat-button color="dark"> <mat-icon>picture_as_pdf</mat-icon> Pdf </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-2 col-lg-2">
+                <img src="assets/img/vidanova.png" alt="Logo" class="img-fluid logo">
+            </div>
+            <div class="col-md-10 col-lg-10 text-center">
+                <h3 class="app-title">VIDANOVA</h3>
+                <h6>PRODUCTOS MÁS VENDIDOS</h6>
+                <h6 class="text-primary">
+                    DESDE: <span class="text-dark">2023/07/22</span>
+                    - HASTA: <span class="text-dark">2023/08/15</span>
+                </h6>
+            </div>
+        </div>
+
+        <div class="row col-12" *ngIf="listaProductoMasVendido.length > 0">
+            <div class="col-md-12 ">
+              <div class="row">
+                <div class="col-lg-7 mt-2 ">
+                  <!-- <button mat-stroked-button color="warn" (click)="cerrar()">Salir</button> -->
+                </div>
+        
+                <div class="col-lg-5 d-flex justify-content-end">
+                  <mat-form-field appearance="standard" class="d-flex justify-content-end">
+                    <mat-label>Buscar...</mat-label>
+                    <input matInput (keyup)="applyFilterProductoMasVendido($event)" placeholder="Ej. Mia"
+                      #inputProductoMasVendido>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+        
+            <div class="mt-3" >
+              <table mat-table [dataSource]="dataSourceProductoMasVendido" multiTemplateDataRows matSort>
+        
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> N° </th>
+                  <td mat-cell *matCellDef="let element; let i = dataIndex;"> {{ i+1 }} </td>
+                  <td mat-footer-cell *matFooterCellDef>  <mat-icon> attach_money</mat-icon> </td>
+        
+                </ng-container>
+        
+                <ng-container matColumnDef="codigo">
+                  <th mat-header-cell *matHeaderCellDef> Código </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.producto.codigo | titlecase }}</td>
+                  <td mat-footer-cell *matFooterCellDef> Totales </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="producto">
+                  <th mat-header-cell *matHeaderCellDef> Producto </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.producto.nombre | titlecase }}</td>
+                  <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="cantidad">
+                  <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.cantidad | number }}</td>
+                  <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="precio_venta">
+                  <th mat-header-cell *matHeaderCellDef> Precio de Venta </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.producto.precio_venta | currency : 'USD' }}</td>
+                  <td mat-footer-cell *matFooterCellDef>  </td>
+
+                  <!-- <td mat-footer-cell *matFooterCellDef> {{ totalMontoMensual | currency : 'USD' }}  </td> -->
+                </ng-container>
+        
+                <ng-container matColumnDef="total">
+                  <th mat-header-cell *matHeaderCellDef> Total </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.total | currency : 'USD' }}</td>
+                  <td mat-footer-cell *matFooterCellDef> {{ total | currency : 'USD'  }} </td>
+                </ng-container>
+    
+        
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpandProductoMasVendido"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplayWithExpandProductoMasVendido;"></tr>
+                <tr mat-footer-row *matFooterRowDef="columnsToDisplayWithExpandProductoMasVendido"></tr>
+        
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No hay registros "{{inputProductoMasVendido.value}}"</td>
+                </tr>
+              </table>
+              <mat-paginator #MatPaginatorAfiliadosResp [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+          </div>
+    </div>
+</mat-toolbar>
