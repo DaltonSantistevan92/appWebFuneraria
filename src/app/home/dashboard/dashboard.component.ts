@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit, AfterContentInit {
   afiliadosActivosInactivos! : AfiliadosInactivosAndActivos;
   dataTotalCV! : CompraVentaTotales;
 
-  @ViewChild('myChart') myChart! : ElementRef;
+  @ViewChild('myChartAfiliadoEstados', { static: true }) myChartAfiliadoEstados! : ElementRef;
   @ViewChild('myChartPedidos', { static: true }) chartPedidos? : ElementRef;
 
   constructor(
@@ -64,6 +64,7 @@ export class DashboardComponent implements OnInit, AfterContentInit {
   ngAfterContentInit(): void {
     if (!this.chartPedidos) return;
     this.kpiEstadoPedido();
+    this.kpiAfiliadosEstados();
     
   }
 
@@ -245,6 +246,76 @@ export class DashboardComponent implements OnInit, AfterContentInit {
         console.log(err);
       }
     });
+  }
+
+  kpiAfiliadosEstados(){
+    this._ds.getkpiAfilicionesEstados().subscribe({
+      next : (resp) => {
+        if(resp.status){
+          let series = this.armarSeries(resp.serie);
+          this.graficarSeries(series);
+        } 
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  graficarSeries(seriesData:any) {
+    const chart = new JSC.Chart(this.myChartAfiliadoEstados.nativeElement, {
+      debug: true,
+      legend_visible: false,
+      yAxis: {
+        line_visible: false,
+        defaultTick_enabled: false,
+        scale: { range: [0, 100] }
+      },
+      defaultSeries_angle: {
+        orientation: 90,
+        sweep: 360,
+        end: 360
+      },
+      defaultSeries: {
+        type: 'gauge column roundcaps',
+        /* angle: { sweep: 360, start: -90, end: 360 }, */
+        defaultPoint_tooltip: '<b>%seriesName</b> %yValue% del total',
+        shape: {
+          innerSize: '70%',
+          label: {
+            text: '<b>%per %</b>',
+            align: 'center',
+            verticalAlign: 'middle'
+          }
+        }
+      },
+      title_position: 'center',
+      title_label_text: 'Afiliciones por Estados',
+      series: seriesData
+    });
+  }
+
+
+  armarSeries(data :any) {
+    let labels = data.labels;
+    let porcentaje = data.porcentaje;
+    let colors = data.colors;
+    let midata = [];
+    let p = 0;
+    for (let i = 0; i < labels.length; i++) {
+      p = porcentaje[i];
+      midata.push(
+        {
+          color: colors[i],
+          name: labels[i],
+          attributes: {
+            per: p
+          },
+          points: [['val', p]]
+        },
+      );
+    }
+    return midata;
   }
   
 }

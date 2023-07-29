@@ -24,6 +24,11 @@ export class DashService {
     return this.http.get<IntKPIPedidoEstado>(url);
   }
 
+  getkpiAfilicionesEstados(): Observable<any>{
+    const url = `${this.api}/kpiAfilicionesEstados`;
+    return this.http.get<any>(url);
+  }
+
   getCantidadAfiliados(): Observable<IntAfiliadosInactivosAndActivos>{
     const url = `${this.api}/cantidadAfiliado`;
     return this.http.get<IntAfiliadosInactivosAndActivos>(url);
